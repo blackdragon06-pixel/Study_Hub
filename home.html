@@ -2,253 +2,1746 @@
 <html lang="si">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Study Hub 📚 | Smart Sinhala Study Space</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Study Hub 📚</title>
+
 <style>
-:root{
-  --bg:#f5f7fb; --card:#fff; --text:#182033; --muted:#697386;
-  --primary:#6c63ff; --secondary:#00b894; --border:#e6e9f0;
-  --shadow:0 12px 35px rgba(35,42,70,.09);
-}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,-apple-system,"Noto Sans Sinhala",sans-serif;background:var(--bg);color:var(--text);transition:.3s}
-body.dark{--bg:#0f1220;--card:#181c2d;--text:#f4f6ff;--muted:#a9b0c5;--border:#2b3147;--shadow:0 12px 35px rgba(0,0,0,.25)}
+:root{
+ --bg:#f5f7fc;--card:#fff;--text:#182033;--muted:#737c91;
+ --primary:#635bff;--secondary:#00a884;--border:#e4e8f0;
+ --danger:#ef4444;--shadow:0 12px 35px rgba(32,42,70,.08);
+}
+body.dark{
+ --bg:#0d1220;--card:#171d2c;--text:#f5f7ff;
+ --muted:#aeb7ca;--border:#293247;--shadow:0 12px 35px #0005;
+}
+body{
+ font-family:Arial,"Noto Sans Sinhala",sans-serif;
+ background:var(--bg);color:var(--text);transition:.25s;
+}
 button,input,textarea,select{font:inherit}
-button{cursor:pointer;border:0}
+button{cursor:pointer}
 .hidden{display:none!important}
-#loginPage{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#6c63ff,#8e7dff 50%,#00b894)}
-.login-box{width:min(430px,100%);background:rgba(255,255,255,.97);padding:34px;border-radius:28px;box-shadow:0 25px 70px rgba(0,0,0,.2);animation:up .7s ease}
-.logo{font-size:30px;font-weight:900;margin-bottom:8px}.logo span{color:var(--primary)}
-.login-box p{color:#687085;margin-bottom:22px}
-.field{margin:13px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
-.field input,.search input,.note-input,.ai-input{width:100%;padding:13px 14px;border:1px solid #dfe3ed;border-radius:13px;outline:none}
-.primary{background:var(--primary);color:white;padding:13px 18px;border-radius:13px;font-weight:800}
-.primary:hover{transform:translateY(-1px);filter:brightness(1.05)}
-.demo{text-align:center;font-size:12px;margin-top:14px;color:#7b8498}
-#app{display:flex;min-height:100vh}
-.sidebar{width:245px;background:var(--card);border-right:1px solid var(--border);padding:22px 15px;position:fixed;inset:0 auto 0 0;z-index:10}
-.brand{font-size:23px;font-weight:900;padding:8px 12px 22px}.brand span{color:var(--primary)}
-.nav button{width:100%;text-align:left;padding:12px 14px;background:none;color:var(--muted);border-radius:12px;margin:3px 0;font-weight:700}
-.nav button.active,.nav button:hover{background:rgba(108,99,255,.1);color:var(--primary)}
-.sidebar-bottom{position:absolute;bottom:18px;left:15px;right:15px}
-.main{margin-left:245px;width:calc(100% - 245px);padding:24px;max-width:1500px}
-.topbar{display:flex;gap:15px;align-items:center;justify-content:space-between;margin-bottom:25px}
-.search{flex:1;max-width:520px}.search input{background:var(--card);color:var(--text);border-color:var(--border)}
-.icon-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:12px}
-.page{display:none}.page.active{display:block;animation:fade .35s ease}
-.hero{background:linear-gradient(135deg,#6c63ff,#8a80ff);color:white;padding:28px;border-radius:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12);right:-45px;top:-60px}
-.hero h1{font-size:30px;margin-bottom:7px}.hero p{opacity:.9}.hero .chips{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}.chip{background:rgba(255,255,255,.16);padding:8px 12px;border-radius:20px;font-size:13px}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
-.card{background:var(--card);border:1px solid var(--border);border-radius:19px;padding:20px;box-shadow:var(--shadow)}
-.stat strong{display:block;font-size:28px}.stat small{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.subject{position:relative;overflow:hidden}.subject h3{margin:10px 0 5px}.subject p{font-size:13px;color:var(--muted)}.subject .emoji{font-size:36px}.subject button{margin-top:15px;width:100%;padding:10px;border-radius:11px;background:rgba(108,99,255,.1);color:var(--primary);font-weight:800}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}.section-title h2{font-size:20px}
-.progress{height:9px;background:var(--border);border-radius:99px;overflow:hidden;margin:12px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:99px}
-.two{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}.task{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}.task:last-child{border:0}.badge{font-size:11px;padding:5px 8px;border-radius:9px;background:rgba(0,184,148,.12);color:var(--secondary);font-weight:800}
-.paper-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.paper h3{margin:7px 0}.paper p{color:var(--muted);font-size:13px}.paper .actions{display:flex;gap:7px;margin-top:13px}.outline{padding:9px 12px;border-radius:10px;background:var(--bg);color:var(--text);border:1px solid var(--border)}
-.ai{display:grid;grid-template-columns:1fr 330px;gap:18px}.chat{min-height:430px;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:5px}.msg{max-width:80%;padding:11px 13px;border-radius:15px;margin:9px 0;line-height:1.5}.bot{background:rgba(108,99,255,.1);margin-right:auto}.user{background:var(--primary);color:white;margin-left:auto}.ai-form{display:flex;gap:8px;margin-top:12px}.ai-form input{flex:1}.ai-side li{margin:12px 0;color:var(--muted);font-size:14px}
-.timer{text-align:center}.timer-display{font-size:72px;font-weight:900;letter-spacing:2px;margin:15px}.timer button{margin:4px}.note-input{min-height:170px;resize:vertical;background:var(--card);color:var(--text);border-color:var(--border)}
-.quiz-option{width:100%;text-align:left;padding:13px;margin:7px 0;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px}.quiz-option:hover{border-color:var(--primary)}
-.mobile-menu{display:none}
-@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-@keyframes up{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
-@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.paper-grid{grid-template-columns:repeat(2,1fr)}.ai,.two{grid-template-columns:1fr}}
+
+/* LOGIN */
+.login{
+ min-height:100vh;display:flex;align-items:center;justify-content:center;
+ padding:20px;background:linear-gradient(135deg,#635bff,#00a884);
+}
+.login-box{
+ width:min(440px,100%);background:white;padding:32px;border-radius:28px;
+ box-shadow:0 25px 70px #0005;
+}
+.brand{font-size:30px;font-weight:900;margin-bottom:7px}
+.brand span{color:#635bff}
+.login-sub{color:#777;margin-bottom:22px}
+.group{margin-bottom:15px}
+.group label{display:block;font-size:13px;font-weight:bold;margin-bottom:6px}
+.group input,.group textarea,.group select{
+ width:100%;padding:13px;border:1px solid #ddd;border-radius:12px;outline:none;
+}
+.primary{
+ border:0;background:var(--primary);color:#fff;padding:11px 17px;
+ border-radius:11px;font-weight:bold;
+}
+.secondary{
+ border:1px solid var(--border);background:var(--card);color:var(--text);
+ padding:10px 14px;border-radius:11px;font-weight:bold;
+}
+.login-tabs{display:flex;gap:8px;margin-bottom:15px}
+.login-tabs button{flex:1}
+
+/* APP */
+.app{display:flex;min-height:100vh}
+.sidebar{
+ position:fixed;left:0;top:0;bottom:0;width:245px;
+ background:var(--card);border-right:1px solid var(--border);
+ padding:18px;z-index:50;
+}
+.logo{font-size:25px;font-weight:900;margin-bottom:25px}
+.logo span{color:var(--primary)}
+.nav button{
+ width:100%;border:0;background:transparent;color:var(--muted);
+ padding:12px;border-radius:11px;text-align:left;font-weight:bold;margin:3px 0;
+}
+.nav button:hover,.nav button.active{
+ background:#635bff15;color:var(--primary)
+}
+.bottom{position:absolute;bottom:18px;left:18px;right:18px}
+.bottom button{width:100%;margin-top:7px}
+
+.main{margin-left:245px;width:calc(100% - 245px);padding:18px}
+.top{
+ display:flex;gap:10px;align-items:center;margin-bottom:18px;
+ position:relative;
+}
+.search{
+ flex:1;padding:13px;border:1px solid var(--border);border-radius:13px;
+ background:var(--card);color:var(--text);
+}
+.profile-btn{
+ display:flex;align-items:center;gap:8px;border:1px solid var(--border);
+ background:var(--card);color:var(--text);padding:7px 11px;border-radius:14px;
+}
+.avatar{
+ width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
+ background:linear-gradient(135deg,#635bff,#00a884);color:#fff;font-weight:bold;
+}
+.menu{display:none}
+
+/* PAGES */
+.page{display:none}
+.page.active{display:block}
+
+/* HERO */
+.hero{
+ padding:30px;border-radius:26px;color:#fff;
+ background:linear-gradient(135deg,#635bff,#00a884);
+ box-shadow:var(--shadow);overflow:hidden;position:relative;
+}
+.hero:after{
+ content:"📚";position:absolute;right:35px;bottom:-20px;
+ font-size:110px;opacity:.15;
+}
+.hero h1{font-size:30px;margin-bottom:8px}
+.hero p{opacity:.9}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{background:#ffffff22;padding:8px 12px;border-radius:20px}
+
+/* CARDS */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:17px 0}
+.card{
+ background:var(--card);border:1px solid var(--border);border-radius:19px;
+ padding:18px;box-shadow:var(--shadow);
+}
+.stat-num{font-size:28px;font-weight:900}
+.muted{color:var(--muted);font-size:13px}
+.progress{height:8px;background:var(--border);border-radius:20px;overflow:hidden;margin-top:9px}
+.progress-bar{
+ height:100%;width:0;background:linear-gradient(90deg,#635bff,#00a884);
+ transition:width .5s;
+}
+.title{
+ display:flex;justify-content:space-between;align-items:center;margin:21px 0 12px;
+}
+.quick{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.quick .card{cursor:pointer;transition:.2s}
+.quick .card:hover{transform:translateY(-5px)}
+.icon{font-size:30px;margin-bottom:8px}
+
+.grid2{display:grid;grid-template-columns:1.3fr .7fr;gap:14px;margin-top:15px}
+.task{
+ display:flex;justify-content:space-between;gap:10px;padding:12px 0;
+ border-bottom:1px solid var(--border);
+}
+.badge{
+ display:inline-block;padding:5px 9px;border-radius:8px;
+ background:#00a88418;color:var(--secondary);font-size:11px;font-weight:bold;
+}
+
+/* SUBJECTS */
+.subjects{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.subject{transition:.2s}
+.subject:hover{transform:translateY(-4px)}
+.subject-icon{font-size:45px;margin-bottom:8px}
+
+/* PAPERS */
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.filters input,.filters select{
+ padding:11px;border:1px solid var(--border);border-radius:11px;
+ background:var(--card);color:var(--text)
+}
+.papers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.actions{display:flex;gap:7px;margin-top:12px}
+.danger{
+ background:var(--danger);color:white;border:0;padding:8px 11px;border-radius:9px
+}
+
+/* QUIZ */
+.question{font-size:22px;margin:18px 0}
+.option{
+ width:100%;padding:13px;margin:6px 0;text-align:left;
+ border:1px solid var(--border);border-radius:12px;
+ background:var(--card);color:var(--text);
+}
+.option:hover{border-color:var(--primary)}
+.feedback{font-weight:bold;margin:12px 0}
+
+/* AI */
+.ai{display:grid;grid-template-columns:1fr 300px;gap:14px}
+.chat{min-height:480px;display:flex;flex-direction:column}
+.messages{flex:1;min-height:360px;overflow:auto}
+.message{
+ max-width:82%;padding:11px 14px;border-radius:15px;margin:7px 0;
+ line-height:1.5;
+}
+.bot{background:#635bff15}
+.me{margin-left:auto;background:var(--primary);color:white}
+.ai-input{display:flex;gap:8px;margin-top:10px}
+.ai-input input{
+ flex:1;padding:12px;border:1px solid var(--border);border-radius:11px;
+ background:var(--card);color:var(--text)
+}
+
+/* TIMER */
+.timer{text-align:center}
+.clock{font-size:76px;font-weight:900;margin:22px}
+
+/* PROFILE */
+.profile-cover{
+ padding:25px;border-radius:22px;color:white;
+ background:linear-gradient(135deg,#635bff,#00a884);
+}
+.profile-head{display:flex;gap:18px;align-items:center}
+.big-avatar{
+ width:85px;height:85px;border-radius:50%;display:grid;place-items:center;
+ background:#ffffff25;border:3px solid #fff;font-size:30px;font-weight:bold;
+}
+.profile-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px}
+.achievement{
+ padding:14px;border:1px solid var(--border);border-radius:13px;
+ margin-top:9px;
+}
+
+/* MODAL */
+.modal{
+ position:fixed;inset:0;background:#0008;display:none;align-items:center;
+ justify-content:center;padding:18px;z-index:100;
+}
+.modal.show{display:flex}
+.modal-box{
+ width:min(560px,100%);max-height:90vh;overflow:auto;
+ background:var(--card);color:var(--text);border-radius:20px;padding:20px;
+}
+
+/* RESPONSIVE */
+@media(max-width:1100px){
+ .stats{grid-template-columns:repeat(3,1fr)}
+ .quick{grid-template-columns:repeat(3,1fr)}
+ .subjects{grid-template-columns:repeat(2,1fr)}
+ .papers{grid-template-columns:repeat(2,1fr)}
+ .profile-grid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:700px){
- .sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:none}.main{margin:0;width:100%;padding:15px}.mobile-menu{display:block}.topbar{gap:8px}.topbar .search{order:3;flex-basis:100%;max-width:none;display:none}.topbar.show-search{flex-wrap:wrap}.topbar.show-search .search{display:block}.grid,.paper-grid{grid-template-columns:1fr}.hero h1{font-size:24px}.stats{gap:9px}.card{padding:16px}
+ .sidebar{transform:translateX(-100%);transition:.25s}
+ .sidebar.open{transform:translateX(0)}
+ .main{margin-left:0;width:100%;padding:12px}
+ .menu{display:block}
+ .profile-btn span{display:none}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .quick{grid-template-columns:repeat(2,1fr)}
+ .subjects,.papers,.grid2,.ai{grid-template-columns:1fr}
+ .profile-grid{grid-template-columns:repeat(2,1fr)}
+ .hero h1{font-size:24px}
+ .clock{font-size:58px}
 }
 </style>
 </head>
+
 <body>
 
-<section id="loginPage">
-  <div class="login-box">
-    <div class="logo">📚 Study <span>Hub</span></div>
-    <p>ඔයාගේ Smart Sinhala Study Space එකට welcome!</p>
-    <div class="field"><label>නම</label><input id="name" placeholder="ඔයාගේ නම"></div>
-    <div class="field"><label>Password</label><input id="password" type="password" placeholder="Password එකක් දාන්න"></div>
-    <button class="primary" style="width:100%" onclick="login()">Login / Enter Study Hub 🚀</button>
-    <div class="demo">මෙය front-end demo login එකකි. Real website එකකට backend authentication එකක් සම්බන්ධ කළ යුතුය.</div>
-  </div>
-</section>
+<!-- LOGIN -->
+<div id="loginScreen" class="login">
 
-<section id="app" class="hidden">
+<div class="login-box">
+
+<div class="brand">📚 Study <span>Hub</span></div>
+<p class="login-sub">Smart learning platform • 100% Free</p>
+
+<div class="login-tabs">
+<button class="primary" onclick="loginMethod='email'">📧 Email</button>
+<button class="secondary" onclick="loginMethod='phone'">📱 Phone</button>
+</div>
+
+<div class="group">
+<label id="loginLabel">Email Address</label>
+<input id="loginContact" placeholder="example@gmail.com">
+</div>
+
+<button class="primary" style="width:100%" onclick="sendOTP()">
+Send OTP →
+</button>
+
+<div id="otpArea" class="hidden" style="margin-top:15px">
+
+<div class="group">
+<label>OTP Code</label>
+<input id="otp" maxlength="6" placeholder="123456">
+</div>
+
+<button class="primary" style="width:100%" onclick="verifyOTP()">
+🔐 Verify & Login
+</button>
+
+<p id="demoOtp" style="font-size:12px;text-align:center;margin-top:10px;color:#777"></p>
+
+</div>
+
+<p style="font-size:11px;color:#777;text-align:center;margin-top:18px">
+Demo OTP system. Real SMS/Email OTP සඳහා backend/auth service එකක් අවශ්‍යයි.
+</p>
+
+</div>
+</div>
+
+
+<!-- APP -->
+<div id="app" class="app hidden">
+
 <aside class="sidebar" id="sidebar">
-  <div class="brand">📚 Study <span>Hub</span></div>
-  <div class="nav">
-    <button class="active" data-page="dashboard">🏠 Dashboard</button>
-    <button data-page="subjects">📚 Subjects</button>
-    <button data-page="papers">📄 Past & School Papers</button>
-    <button data-page="quiz">🧠 Smart Quiz</button>
-    <button data-page="ai">🤖 Sinhala AI Tutor</button>
-    <button data-page="focus">⏱️ Focus Timer</button>
-    <button data-page="notes">📝 My Notes</button>
-  </div>
-  <div class="sidebar-bottom">
-    <button class="icon-btn" style="width:100%" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
-    <button class="icon-btn" style="width:100%;margin-top:8px" onclick="logout()">↪ Logout</button>
-  </div>
+
+<div class="logo">📚 Study <span>Hub</span></div>
+
+<div class="nav">
+
+<button class="active" onclick="openPage('dashboard',this)">🏠 Dashboard</button>
+<button onclick="openPage('subjects',this)">📚 Subjects</button>
+<button onclick="openPage('papers',this)">📄 Papers</button>
+<button onclick="openPage('quiz',this)">🧠 Smart MCQ</button>
+<button onclick="openPage('ai',this)">🤖 Sinhala AI</button>
+<button onclick="openPage('timer',this)">⏱️ Focus Timer</button>
+<button onclick="openPage('notes',this)">📝 Notes</button>
+<button onclick="openPage('planner',this)">📅 Planner</button>
+<button onclick="openPage('flashcards',this)">🃏 Flashcards</button>
+<button onclick="openPage('manager',this)">🛠️ Paper Manager</button>
+
+</div>
+
+<div class="bottom">
+<button class="secondary" onclick="toggleDark()">🌙 Theme</button>
+<button class="secondary" onclick="logout()">↪ Logout</button>
+</div>
+
 </aside>
 
+
 <main class="main">
-  <div class="topbar" id="topbar">
-    <button class="icon-btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-    <div class="search"><input id="globalSearch" placeholder="🔎 Search subjects, papers, notes..." oninput="globalSearch()"></div>
-    <button class="icon-btn" onclick="document.getElementById('topbar').classList.toggle('show-search')">🔎</button>
-    <button class="icon-btn" onclick="toggleTheme()">🌙</button>
-  </div>
 
-  <section class="page active" id="dashboard">
-    <div class="hero">
-      <h1>ආයුබෝවන්, <span id="userName">Student</span>! 👋</h1>
-      <p>අදත් පොඩි step එකක් ගන්න. Consistency > perfection 💪</p>
-      <div class="chips"><span class="chip">🔥 7 Day Streak</span><span class="chip">🎯 Daily Goal 72%</span><span class="chip">⭐ 1,240 XP</span></div>
-    </div>
-    <div class="stats">
-      <div class="card stat"><strong>72%</strong><small>Weekly Progress</small><div class="progress"><i style="width:72%"></i></div></div>
-      <div class="card stat"><strong>18</strong><small>Lessons Completed</small></div>
-      <div class="card stat"><strong>7 🔥</strong><small>Study Streak</small></div>
-      <div class="card stat"><strong>84%</strong><small>Quiz Accuracy</small></div>
-    </div>
-    <div class="section-title"><h2>🚀 Subjects</h2><button class="outline" onclick="showPage('subjects')">View all</button></div>
-    <div class="grid">
-      <div class="card subject searchable"><div class="emoji">📐</div><h3>Mathematics</h3><p>Pure + Applied Maths</p><button onclick="openSubject('Mathematics')">Continue →</button></div>
-      <div class="card subject searchable"><div class="emoji">🧬</div><h3>Biology</h3><p>Lessons + MCQ + Papers</p><button onclick="openSubject('Biology')">Continue →</button></div>
-      <div class="card subject searchable"><div class="emoji">⚛️</div><h3>Physics</h3><p>Theory + Problems + Papers</p><button onclick="openSubject('Physics')">Continue →</button></div>
-      <div class="card subject searchable"><div class="emoji">🧪</div><h3>Chemistry</h3><p>Organic + Inorganic + MCQ</p><button onclick="openSubject('Chemistry')">Continue →</button></div>
-    </div>
-    <div class="section-title"><h2>📅 Today's Plan</h2></div>
-    <div class="two">
-      <div class="card">
-        <div class="task"><span>📐 Maths – Trigonometry revision</span><span class="badge">25 min</span></div>
-        <div class="task"><span>⚛️ Physics – MCQ practice</span><span class="badge">20 min</span></div>
-        <div class="task"><span>🧪 Chemistry – Quick review</span><span class="badge">20 min</span></div>
-      </div>
-      <div class="card"><h3>🏆 Level Progress</h3><p style="color:var(--muted);margin-top:8px">Level 8 → Level 9</p><div class="progress"><i style="width:68%"></i></div><small style="color:var(--muted)">680 / 1000 XP</small></div>
-    </div>
-  </section>
+<div class="top">
 
-  <section class="page" id="subjects">
-    <div class="section-title"><h2>📚 All Subjects</h2></div>
-    <div class="grid">
-      <div class="card subject searchable"><div class="emoji">📐</div><h3>Mathematics</h3><p>Pure, Applied, Formula Bank</p><button onclick="openSubject('Mathematics')">Open Subject</button></div>
-      <div class="card subject searchable"><div class="emoji">🧬</div><h3>Biology</h3><p>Units, diagrams, MCQ</p><button onclick="openSubject('Biology')">Open Subject</button></div>
-      <div class="card subject searchable"><div class="emoji">⚛️</div><h3>Physics</h3><p>Theory, equations, problems</p><button onclick="openSubject('Physics')">Open Subject</button></div>
-      <div class="card subject searchable"><div class="emoji">🧪</div><h3>Chemistry</h3><p>Organic, physical, inorganic</p><button onclick="openSubject('Chemistry')">Open Subject</button></div>
-    </div>
-    <div class="card" style="margin-top:18px"><h3 id="subjectTitle">📌 Select a subject</h3><p id="subjectText" style="color:var(--muted);margin-top:8px">Subject එකක් open කළාම topics, progress සහ quick actions මෙතැන පෙන්වයි.</p><div id="topicButtons" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"></div></div>
-  </section>
+<button class="secondary menu" onclick="toggleSidebar()">☰</button>
 
-  <section class="page" id="papers">
-    <div class="section-title"><h2>📄 Past Papers & School Papers</h2><button class="primary" onclick="alert('Paper upload feature එකට backend/storage එකක් connect කරන්න.')">+ Add Paper</button></div>
-    <div class="paper-grid">
-      <div class="card paper searchable"><span class="badge">Mathematics</span><h3>2025 A/L Mathematics</h3><p>Past Paper • Sinhala/English</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
-      <div class="card paper searchable"><span class="badge">Physics</span><h3>2024 Physics Paper</h3><p>Past Paper • MCQ + Structured</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
-      <div class="card paper searchable"><span class="badge">Chemistry</span><h3>School Term Paper</h3><p>School Paper • Practice</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
-      <div class="card paper searchable"><span class="badge">Biology</span><h3>Biology Revision Paper</h3><p>MCQ • Structured • Essay</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
-      <div class="card paper searchable"><span class="badge">All</span><h3>Weekly Mixed Paper</h3><p>Timed challenge</p><div class="actions"><button class="primary" onclick="showPage('quiz')">Start →</button></div></div>
-      <div class="card paper searchable"><span class="badge">School</span><h3>School Paper Library</h3><p>Upload your own PDFs</p><div class="actions"><button class="outline" onclick="alert('ඔයාගේ backend එකට file upload/storage එක add කළ හැක.')">+ Upload</button></div></div>
-    </div>
-  </section>
+<input class="search" id="search" placeholder="🔎 Search Study Hub...">
 
-  <section class="page" id="quiz">
-    <div class="section-title"><h2>🧠 Smart Quiz</h2><span class="badge">XP +10</span></div>
-    <div class="card">
-      <p style="color:var(--muted)">Question <span id="qNum">1</span> / 5</p><h2 id="question" style="margin:14px 0">ශ්‍රේණිගත කිරීමේදී 2 + 3 × 4 = ?</h2>
-      <div id="options"></div><p id="quizFeedback" style="margin-top:12px;font-weight:800"></p>
-      <button class="primary" style="margin-top:10px" onclick="nextQuestion()">Next Question →</button>
-    </div>
-  </section>
+<button class="secondary" onclick="toggleDark()">🌙</button>
 
-  <section class="page" id="ai">
-    <div class="section-title"><h2>🤖 Sinhala AI Tutor</h2></div>
-    <div class="ai">
-      <div class="card chat"><div class="messages" id="messages"><div class="msg bot">👋 ආයුබෝවන්! මම Study Hub AI Tutor. Maths, Physics, Chemistry, Biology පාඩම් explain කරන්න මගෙන් අහන්න.</div></div><div class="ai-form"><input id="aiInput" placeholder="උදා: Trigonometry සරලව explain කරන්න..." onkeydown="if(event.key==='Enter')askAI()"><button class="primary" onclick="askAI()">Send</button></div></div>
-      <div class="card ai-side"><h3>💡 Try asking</h3><ul><li>📐 “Trigonometry basics කියලා දෙන්න.”</li><li>⚛️ “Newton's laws සරලව explain කරන්න.”</li><li>🧪 “Organic chemistry revise කරමු.”</li><li>🧬 “Cell එකේ කොටස් explain කරන්න.”</li><li>📝 “මට study plan එකක් හදන්න.”</li></ul></div>
-    </div>
-  </section>
+<button class="profile-btn" onclick="openProfile()">
+<div class="avatar" id="topAvatar">S</div>
+<span id="topName">Student</span>
+</button>
 
-  <section class="page" id="focus">
-    <div class="section-title"><h2>⏱️ Focus Timer</h2></div>
-    <div class="card timer"><p style="color:var(--muted)">Pomodoro Focus Session</p><div class="timer-display" id="timer">25:00</div><button class="primary" onclick="startTimer()">▶ Start</button><button class="outline" onclick="pauseTimer()">⏸ Pause</button><button class="outline" onclick="resetTimer()">↻ Reset</button><p id="timerStatus" style="margin-top:14px;color:var(--muted)">Ready to focus 🚀</p></div>
-  </section>
+</div>
 
-  <section class="page" id="notes">
-    <div class="section-title"><h2>📝 My Notes</h2><button class="primary" onclick="saveNote()">💾 Save Note</button></div>
-    <div class="card"><input id="noteTitle" class="note-input" style="min-height:0;height:48px" placeholder="Note title..."><textarea id="noteBody" class="note-input" style="margin-top:12px" placeholder="මෙතැන ඔයාගේ notes ලියන්න..."></textarea><div id="savedNotes" style="margin-top:15px"></div></div>
-  </section>
-</main>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+
+<div class="hero">
+
+<h1>ආයුබෝවන් <span id="studentName">Student</span>! 👋</h1>
+
+<p>අදත් පොඩි step එකක් ගන්න. Consistency > Perfection 💪</p>
+
+<div class="chips">
+
+<span class="chip">🔥 <b id="streak">1</b> Day Streak</span>
+<span class="chip">⭐ <b id="xp">0</b> XP</span>
+<span class="chip">🏆 Level <b id="level">1</b></span>
+<span class="chip">🎯 Daily Goal <b id="goalPercent">0%</b></span>
+
+</div>
+</div>
+
+
+<div class="stats">
+
+<div class="card">
+<div class="stat-num" id="progressText">0%</div>
+<span class="muted">Overall Progress</span>
+<div class="progress"><div id="progressBar" class="progress-bar"></div></div>
+</div>
+
+<div class="card">
+<div class="stat-num" id="quizDone">0</div>
+<span class="muted">MCQs Done</span>
+</div>
+
+<div class="card">
+<div class="stat-num" id="correctCount">0</div>
+<span class="muted">Correct</span>
+</div>
+
+<div class="card">
+<div class="stat-num" id="studyMinutes">0</div>
+<span class="muted">Focus Minutes</span>
+</div>
+
+<div class="card">
+<div class="stat-num" id="paperCount">0</div>
+<span class="muted">My Papers</span>
+</div>
+
+</div>
+
+
+<div class="title"><h2>⚡ Quick Study</h2></div>
+
+<div class="quick">
+
+<div class="card" onclick="openPage('quiz')">
+<div class="icon">🧠</div><b>Quick MCQ</b>
+<p class="muted">Practice now</p>
+</div>
+
+<div class="card" onclick="openPage('ai')">
+<div class="icon">🤖</div><b>AI Tutor</b>
+<p class="muted">Ask in Sinhala</p>
+</div>
+
+<div class="card" onclick="openPage('timer')">
+<div class="icon">⏱️</div><b>Focus</b>
+<p class="muted">25 minute session</p>
+</div>
+
+<div class="card" onclick="openPage('papers')">
+<div class="icon">📄</div><b>Papers</b>
+<p class="muted">Past papers</p>
+</div>
+
+<div class="card" onclick="openPage('flashcards')">
+<div class="icon">🃏</div><b>Recall</b>
+<p class="muted">Flashcards</p>
+</div>
+
+</div>
+
+
+<div class="grid2">
+
+<div class="card">
+
+<h3>🎯 Today's Smart Plan</h3>
+
+<div class="task">📐 Mathematics — 25 min <span class="badge">Study</span></div>
+<div class="task">⚛️ Physics — 20 min <span class="badge">MCQ</span></div>
+<div class="task">🧪 Chemistry — 20 min <span class="badge">Review</span></div>
+<div class="task">🧬 Biology — 15 min <span class="badge">Recall</span></div>
+
+</div>
+
+<div class="card">
+
+<h3>🏆 Achievements</h3>
+
+<div class="task">🔥 First Day <span class="badge">Unlocked</span></div>
+<div class="task">🧠 10 MCQs <span class="badge" id="ach10">Locked</span></div>
+<div class="task">⭐ 100 XP <span class="badge" id="ach100">Locked</span></div>
+
+</div>
+
+</div>
+
 </section>
 
+
+<!-- SUBJECTS -->
+<section id="subjects" class="page">
+
+<div class="title"><h2>📚 Subjects</h2></div>
+
+<div class="subjects">
+
+<div class="card subject">
+<div class="subject-icon">📐</div>
+<h2>Mathematics</h2>
+<p class="muted">Pure + Applied</p>
+<button class="secondary" onclick="topics('Mathematics')">Topics →</button>
+</div>
+
+<div class="card subject">
+<div class="subject-icon">🧬</div>
+<h2>Biology</h2>
+<p class="muted">Theory + Diagrams</p>
+<button class="secondary" onclick="topics('Biology')">Topics →</button>
+</div>
+
+<div class="card subject">
+<div class="subject-icon">⚛️</div>
+<h2>Physics</h2>
+<p class="muted">Theory + Problems</p>
+<button class="secondary" onclick="topics('Physics')">Topics →</button>
+</div>
+
+<div class="card subject">
+<div class="subject-icon">🧪</div>
+<h2>Chemistry</h2>
+<p class="muted">Organic + Physical</p>
+<button class="secondary" onclick="topics('Chemistry')">Topics →</button>
+</div>
+
+</div>
+
+<div class="card" style="margin-top:15px">
+<h3 id="topicTitle">📌 Select a subject</h3>
+<div id="topicList" style="margin-top:12px"></div>
+</div>
+
+</section>
+
+
+<!-- PAPERS -->
+<section id="papers" class="page">
+
+<div class="title">
+<h2>📄 Past & School Papers</h2>
+<button class="primary" onclick="openPaper()">➕ Add</button>
+</div>
+
+<div class="filters">
+
+<input id="paperSearch" placeholder="🔎 Search..." oninput="renderPapers()">
+
+<select id="paperSubject" onchange="renderPapers()">
+<option>All Subjects</option>
+<option>Mathematics</option>
+<option>Biology</option>
+<option>Physics</option>
+<option>Chemistry</option>
+</select>
+
+<select id="paperType" onchange="renderPapers()">
+<option>All Types</option>
+<option>Past Paper</option>
+<option>School Paper</option>
+<option>Model Paper</option>
+</select>
+
+</div>
+
+<div id="paperGrid" class="papers"></div>
+
+</section>
+
+
+<!-- QUIZ -->
+<section id="quiz" class="page">
+
+<div class="title">
+<h2>🧠 Smart MCQ</h2>
+<span class="badge">+10 XP Correct</span>
+</div>
+
+<div class="card">
+
+<span class="muted">Question <b id="qNo">1</b>/20</span>
+
+<div style="margin-top:10px">
+<span id="qSubject" class="badge">Maths</span>
+<span id="qLevel" class="badge">Easy</span>
+</div>
+
+<h2 id="question" class="question"></h2>
+
+<div id="options"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<button class="primary" onclick="nextQuestion()">Next →</button>
+
+</div>
+
+</section>
+
+
+<!-- AI -->
+<section id="ai" class="page">
+
+<div class="title"><h2>🤖 Sinhala AI Tutor</h2></div>
+
+<div class="ai">
+
+<div class="card chat">
+
+<div id="messages" class="messages">
+
+<div class="message bot">
+👋 ආයුබෝවන්! Maths, Biology, Physics,
+Chemistry හෝ study plan ගැන මගෙන් අහන්න.
+</div>
+
+</div>
+
+<div class="ai-input">
+
+<input id="aiInput" placeholder="ප්‍රශ්නයක් අහන්න..."
+onkeydown="if(event.key==='Enter')askAI()">
+
+<button class="primary" onclick="askAI()">Send</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>💡 Try These</h3>
+
+<p class="muted" style="margin-top:15px;cursor:pointer"
+onclick="suggest('Trigonometry සරලව කියලා දෙන්න')">📐 Trigonometry</p>
+
+<p class="muted" style="margin-top:15px;cursor:pointer"
+onclick="suggest('Newton laws explain කරන්න')">⚛️ Newton Laws</p>
+
+<p class="muted" style="margin-top:15px;cursor:pointer"
+onclick="suggest('Cell එක explain කරන්න')">🧬 Cell</p>
+
+<p class="muted" style="margin-top:15px;cursor:pointer"
+onclick="suggest('Organic chemistry revise කරමු')">🧪 Chemistry</p>
+
+<p class="muted" style="margin-top:15px;cursor:pointer"
+onclick="suggest('මට study plan එකක් දෙන්න')">🎯 Study Plan</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- TIMER -->
+<section id="timer" class="page">
+
+<div class="title"><h2>⏱️ Focus Timer</h2></div>
+
+<div class="card timer">
+
+<p class="muted">Pomodoro Focus Session</p>
+
+<div id="clock" class="clock">25:00</div>
+
+<button class="primary" onclick="startTimer()">▶ Start</button>
+<button class="secondary" onclick="pauseTimer()">⏸ Pause</button>
+<button class="secondary" onclick="resetTimer()">↻ Reset</button>
+
+<p id="timerMsg" class="muted" style="margin-top:15px">Ready 🚀</p>
+
+</div>
+</section>
+
+
+<!-- NOTES -->
+<section id="notes" class="page">
+
+<div class="title">
+<h2>📝 My Notes</h2>
+<button class="primary" onclick="saveNote()">💾 Save</button>
+</div>
+
+<div class="card">
+
+<div class="group">
+<label>Title</label>
+<input id="noteTitle" placeholder="Note title">
+</div>
+
+<div class="group">
+<label>Note</label>
+<textarea id="noteBody" rows="9"
+placeholder="ඔයාගේ study notes මෙතැන ලියන්න..."></textarea>
+</div>
+
+<div id="notesList"></div>
+
+</div>
+</section>
+
+
+<!-- PLANNER -->
+<section id="planner" class="page">
+
+<div class="title">
+<h2>📅 Study Planner</h2>
+<button class="primary" onclick="addTask()">+ Add Task</button>
+</div>
+
+<div class="card">
+<p class="muted">Daily tasks</p>
+<div id="tasks" style="margin-top:10px"></div>
+</div>
+
+</section>
+
+
+<!-- FLASHCARDS -->
+<section id="flashcards" class="page">
+
+<div class="title">
+<h2>🃏 Flashcards</h2>
+<button class="primary" onclick="nextFlash()">Next Card</button>
+</div>
+
+<div class="card" style="min-height:330px;display:grid;place-items:center;text-align:center">
+
+<div>
+
+<div style="font-size:60px">🃏</div>
+
+<h2 id="flashQ">What is F = ma?</h2>
+
+<p id="flashA" class="muted hidden" style="margin:15px">
+Force = mass × acceleration.
+</p>
+
+<button class="secondary" onclick="showFlash()">👀 Show Answer</button>
+
+</div>
+</div>
+</section>
+
+
+<!-- PROFILE -->
+<section id="profile" class="page">
+
+<div class="profile-cover">
+
+<div class="profile-head">
+
+<div class="big-avatar" id="bigAvatar">S</div>
+
+<div>
+<h1 id="profileName">Student</h1>
+<p id="profileContact">student@email.com</p>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="profile-grid">
+
+<div class="card">
+<div class="stat-num" id="pXP">0</div>
+<span class="muted">XP</span>
+</div>
+
+<div class="card">
+<div class="stat-num" id="pLevel">1</div>
+<span class="muted">Level</span>
+</div>
+
+<div class="card">
+<div class="stat-num" id="pStreak">1</div>
+<span class="muted">Streak</span>
+</div>
+
+<div class="card">
+<div class="stat-num" id="pAccuracy">0%</div>
+<span class="muted">MCQ Accuracy</span>
+</div>
+
+</div>
+
+
+<div class="grid2">
+
+<div class="card">
+
+<div class="title">
+<h3>📊 Your Progress</h3>
+<button class="secondary" onclick="editProfile()">✏️ Edit</button>
+</div>
+
+<p class="muted">Overall</p>
+<div class="progress">
+<div id="profileProgress" class="progress-bar"></div>
+</div>
+
+<p class="muted" style="margin-top:15px">
+Study time: <b id="pMinutes">0</b> minutes
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>🏆 Achievements</h3>
+
+<div class="achievement">🔥 First Study Day</div>
+<div class="achievement" id="profileAch10">🔒 10 MCQs</div>
+<div class="achievement" id="profileAch100">🔒 100 XP</div>
+<div class="achievement">📚 Study Hub Member</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MANAGER -->
+<section id="manager" class="page">
+
+<div class="title">
+<h2>🛠️ Paper Manager</h2>
+<button class="primary" onclick="openPaper()">➕ Add Paper</button>
+</div>
+
+<div class="card">
+
+<h3>📤 PDF Add කරන විදිහ</h3>
+
+<ol style="line-height:2;margin:15px 0 15px 20px">
+<li>Google Drive open කරන්න.</li>
+<li>PDF paper එක upload කරන්න.</li>
+<li>Share → Anyone with the link → Viewer.</li>
+<li>Copy link කරන්න.</li>
+<li>Add Paper → link paste කරන්න.</li>
+</ol>
+
+<p class="muted">
+මේ version එකේ paper metadata + link browser එකේ save වේ.
+</p>
+
+</div>
+
+</section>
+
+</main>
+</div>
+
+
+<!-- PAPER MODAL -->
+<div id="paperModal" class="modal">
+
+<div class="modal-box">
+
+<div class="title">
+<h2>➕ Add Paper</h2>
+<button class="secondary" onclick="closePaper()">✕</button>
+</div>
+
+<div class="group">
+<label>Paper Name</label>
+<input id="paperName" placeholder="2025 Physics Past Paper">
+</div>
+
+<div class="group">
+<label>Subject</label>
+<select id="paperSubjectAdd">
+<option>Mathematics</option>
+<option>Biology</option>
+<option>Physics</option>
+<option>Chemistry</option>
+</select>
+</div>
+
+<div class="group">
+<label>Year</label>
+<input id="paperYear" placeholder="2025">
+</div>
+
+<div class="group">
+<label>Type</label>
+<select id="paperTypeAdd">
+<option>Past Paper</option>
+<option>School Paper</option>
+<option>Model Paper</option>
+</select>
+</div>
+
+<div class="group">
+<label>Google Drive / PDF Link</label>
+<input id="paperLink" placeholder="https://drive.google.com/...">
+</div>
+
+<button class="primary" style="width:100%" onclick="savePaper()">
+💾 Save Paper
+</button>
+
+</div>
+</div>
+
+
+<!-- PROFILE MODAL -->
+<div id="profileModal" class="modal">
+
+<div class="modal-box">
+
+<div class="title">
+<h2>👤 Edit Profile</h2>
+<button class="secondary" onclick="closeProfile()">✕</button>
+</div>
+
+<div class="group">
+<label>Name</label>
+<input id="editName">
+</div>
+
+<button class="primary" style="width:100%" onclick="saveProfile()">
+💾 Save Profile
+</button>
+
+</div>
+</div>
+
+
 <script>
-let user=localStorage.getItem("studyHubUser")||"";
-function login(){
-  const n=document.getElementById("name").value.trim();
-  if(!n){alert("නම දාන්න 😊");return}
-  user=n;localStorage.setItem("studyHubUser",user);enterApp();
-}
-function enterApp(){document.getElementById("loginPage").classList.add("hidden");document.getElementById("app").classList.remove("hidden");document.getElementById("userName").textContent=user}
-function logout(){localStorage.removeItem("studyHubUser");location.reload()}
-if(user) enterApp();
 
-document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-function showPage(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
- document.getElementById("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});
-}
-function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("studyHubDark",document.body.classList.contains("dark"))}
-if(localStorage.getItem("studyHubDark")==="true")document.body.classList.add("dark");
+/* =========================
+   STORAGE / USER
+========================= */
 
-function openSubject(s){
- showPage("subjects");document.getElementById("subjectTitle").textContent="📚 "+s;
- const topics={Mathematics:["Algebra","Trigonometry","Calculus","Vectors"],Biology:["Cell","Genetics","Human Biology","Ecology"],Physics:["Mechanics","Waves","Electricity","Modern Physics"],Chemistry:["Organic","Inorganic","Physical","Electrochemistry"]};
- document.getElementById("subjectText").textContent=s+" සඳහා lessons, MCQ, papers සහ revision tools මෙතැනින් access කරන්න.";
- document.getElementById("topicButtons").innerHTML=topics[s].map(x=>`<button class="outline" onclick="alert('${x} lesson section එක ඉදිරියේදී add කළ හැක.')">${x}</button>`).join("");
-}
-function paperInfo(){alert("Demo paper card එකක්. Real PDFs add කරන්න papers/ folder එකට files දාලා link එක වෙනස් කරන්න.")}
-function globalSearch(){
- const q=document.getElementById("globalSearch").value.toLowerCase();
- document.querySelectorAll(".searchable").forEach(x=>x.style.display=(!q||x.innerText.toLowerCase().includes(q))?"":"none");
+let user=JSON.parse(localStorage.getItem("studyHubUserV5")||"null");
+let loginMethod="email";
+let generatedOTP="";
+let papers=JSON.parse(localStorage.getItem("papersV5")||"[]");
+let notes=JSON.parse(localStorage.getItem("notesV5")||"[]");
+let tasks=JSON.parse(localStorage.getItem("tasksV5")||"[]");
+
+const $=id=>document.getElementById(id);
+
+function esc(x){
+ return String(x)
+ .replaceAll("&","&amp;")
+ .replaceAll("<","&lt;")
+ .replaceAll(">","&gt;")
+ .replaceAll('"',"&quot;")
+ .replaceAll("'","&#039;");
 }
 
-const qs=[
- ["ශ්‍රේණිගත කිරීමේදී 2 + 3 × 4 = ?",["14","20","24","9"],0],
- ["sin 90° = ?",["0","1","-1","0.5"],1],
- ["Newtonගේ දෙවන නියමය කුමක්ද?",["F=ma","E=mc²","V=IR","P=VI"],0],
- ["H₂O යනු?",["Oxygen","Hydrogen","Water","Carbon dioxide"],2],
- ["Cell එකේ genetic material ප්‍රධාන වශයෙන් තිබෙන්නේ?",["Nucleus","Ribosome","Cell wall","Vacuole"],0]
+
+/* =========================
+   LOGIN
+========================= */
+
+function sendOTP(){
+
+ let contact=$("loginContact").value.trim();
+
+ if(!contact){
+  alert("Email එක හෝ phone number එක දාන්න 😊");
+  return;
+ }
+
+ generatedOTP=String(
+   Math.floor(100000+Math.random()*900000)
+ );
+
+ $("otpArea").classList.remove("hidden");
+
+ $("demoOtp").textContent=
+ "Demo OTP: "+generatedOTP;
+
+}
+
+function verifyOTP(){
+
+ let otp=$("otp").value.trim();
+
+ if(otp!==generatedOTP){
+  alert("OTP එක වැරදියි.");
+  return;
+ }
+
+ user={
+  name:"Student",
+  contact:$("loginContact").value.trim(),
+  method:loginMethod
+ };
+
+ localStorage.setItem(
+  "studyHubUserV5",
+  JSON.stringify(user)
+ );
+
+ enterApp();
+}
+
+function enterApp(){
+
+ $("loginScreen").classList.add("hidden");
+ $("app").classList.remove("hidden");
+
+ updateUserUI();
+ updateStats();
+
+}
+
+function logout(){
+ localStorage.removeItem("studyHubUserV5");
+ location.reload();
+}
+
+if(user)enterApp();
+
+
+/* =========================
+   USER UI
+========================= */
+
+function updateUserUI(){
+
+ $("studentName").textContent=user.name;
+ $("topName").textContent=user.name;
+ $("profileName").textContent=user.name;
+ $("profileContact").textContent=user.contact;
+
+ let letter=(user.name||"S")[0].toUpperCase();
+
+ $("topAvatar").textContent=letter;
+ $("bigAvatar").textContent=letter;
+
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function openProfile(){
+ openPage("profile");
+ updateProfile();
+}
+
+function editProfile(){
+
+ $("editName").value=user.name;
+
+ $("profileModal").classList.add("show");
+
+}
+
+function closeProfile(){
+ $("profileModal").classList.remove("show");
+}
+
+function saveProfile(){
+
+ let name=$("editName").value.trim();
+
+ if(!name){
+  alert("නම දාන්න.");
+  return;
+ }
+
+ user.name=name;
+
+ localStorage.setItem(
+  "studyHubUserV5",
+  JSON.stringify(user)
+ );
+
+ updateUserUI();
+ updateProfile();
+ closeProfile();
+
+}
+
+function updateProfile(){
+
+ let done=Number(localStorage.getItem("quizDoneV5")||0);
+ let correct=Number(localStorage.getItem("correctV5")||0);
+ let xp=correct*10;
+ let level=Math.floor(xp/100)+1;
+
+ let accuracy=done?
+ Math.round(correct/done*100):0;
+
+ let progress=Math.min(100,Math.round(done/20*100));
+
+ $("pXP").textContent=xp;
+ $("pLevel").textContent=level;
+ $("pStreak").textContent=localStorage.getItem("streakV5")||1;
+ $("pAccuracy").textContent=accuracy+"%";
+ $("pMinutes").textContent=localStorage.getItem("minutesV5")||0;
+
+ $("profileProgress").style.width=progress+"%";
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function openPage(page,btn=null){
+
+ document.querySelectorAll(".page")
+ .forEach(p=>p.classList.remove("active"));
+
+ $(page).classList.add("active");
+
+ document.querySelectorAll(".nav button")
+ .forEach(b=>b.classList.remove("active"));
+
+ if(btn)btn.classList.add("active");
+
+ $("sidebar").classList.remove("open");
+
+ if(page==="profile")updateProfile();
+
+}
+
+function toggleSidebar(){
+ $("sidebar").classList.toggle("open");
+}
+
+
+/* =========================
+   THEME
+========================= */
+
+function toggleDark(){
+
+ document.body.classList.toggle("dark");
+
+ localStorage.setItem(
+  "darkV5",
+  document.body.classList.contains("dark")
+ );
+
+}
+
+if(localStorage.getItem("darkV5")==="true")
+ document.body.classList.add("dark");
+
+
+/* =========================
+   SUBJECTS
+========================= */
+
+function topics(subject){
+
+ let data={
+ Mathematics:["Algebra","Trigonometry","Calculus","Vectors","Statistics","Complex Numbers"],
+ Biology:["Cell Biology","Genetics","Human Biology","Ecology","Evolution","Plant Biology"],
+ Physics:["Mechanics","Waves","Electricity","Thermal Physics","Modern Physics","Fields"],
+ Chemistry:["Atomic Structure","Chemical Bonding","Organic Chemistry","Inorganic Chemistry","Electrochemistry","Physical Chemistry"]
+ };
+
+ $("topicTitle").textContent="📌 "+subject+" Topics";
+
+ $("topicList").innerHTML=data[subject].map(t=>
+ `<button class="secondary" style="margin:4px"
+ onclick="alert('${t} practice කරන්න Smart MCQ සහ AI Tutor භාවිතා කරන්න 📚')">${t}</button>`
+ ).join("");
+
+}
+
+
+/* =========================
+   PAPERS
+========================= */
+
+function openPaper(){
+ $("paperModal").classList.add("show");
+}
+
+function closePaper(){
+ $("paperModal").classList.remove("show");
+}
+
+function savePaper(){
+
+ let name=$("paperName").value.trim();
+ let link=$("paperLink").value.trim();
+
+ if(!name||!link){
+  alert("Paper name සහ link දෙකම දාන්න.");
+  return;
+ }
+
+ if(!/^https?:\/\//i.test(link)){
+  alert("Valid link එකක් දාන්න.");
+  return;
+ }
+
+ papers.unshift({
+  id:Date.now(),
+  name,
+  subject:$("paperSubjectAdd").value,
+  year:$("paperYear").value,
+  type:$("paperTypeAdd").value,
+  link
+ });
+
+ localStorage.setItem("papersV5",JSON.stringify(papers));
+
+ $("paperName").value="";
+ $("paperYear").value="";
+ $("paperLink").value="";
+
+ closePaper();
+ renderPapers();
+ updateStats();
+
+}
+
+function deletePaper(id){
+
+ if(!confirm("Paper එක delete කරන්නද?"))return;
+
+ papers=papers.filter(p=>p.id!==id);
+
+ localStorage.setItem("papersV5",JSON.stringify(papers));
+
+ renderPapers();
+ updateStats();
+
+}
+
+function renderPapers(){
+
+ let s=($("paperSearch").value||"").toLowerCase();
+ let sub=$("paperSubject").value;
+ let type=$("paperType").value;
+
+ let list=papers.filter(p=>
+  (p.name+" "+p.subject+" "+p.year).toLowerCase().includes(s)&&
+  (sub==="All Subjects"||p.subject===sub)&&
+  (type==="All Types"||p.type===type)
+ );
+
+ if(!list.length){
+
+  $("paperGrid").innerHTML=`
+  <div class="card" style="grid-column:1/-1;text-align:center">
+  <h3>📭 Papers නැහැ</h3>
+  <p class="muted">Add Paper button එකෙන් PDF link එකක් add කරන්න.</p>
+  </div>`;
+
+  return;
+ }
+
+ $("paperGrid").innerHTML=list.map(p=>`
+
+ <div class="card">
+
+ <span class="badge">${esc(p.subject)}</span>
+ <span class="badge">${esc(p.type)}</span>
+
+ <h3 style="margin-top:10px">${esc(p.name)}</h3>
+
+ <p class="muted">Year: ${esc(p.year)}</p>
+
+ <div class="actions">
+
+ <a class="secondary"
+ href="${esc(p.link)}"
+ target="_blank"
+ rel="noopener">
+ 👀 Open PDF
+ </a>
+
+ <button class="danger" onclick="deletePaper(${p.id})">🗑️</button>
+
+ </div>
+
+ </div>
+
+ `).join("");
+
+}
+
+renderPapers();
+
+
+/* =========================
+   MCQ
+========================= */
+
+const questions=[
+
+["2 + 3 × 4 = ?",["14","20","24","9"],0,"Mathematics","Easy"],
+["sin 90° = ?",["0","1","-1","0.5"],1,"Mathematics","Easy"],
+["Newtonගේ දෙවන නියමය?",["F = ma","E = mc²","V = IR","P = VI"],0,"Physics","Easy"],
+["H₂O යනු?",["Oxygen","Hydrogen","Water","Carbon dioxide"],2,"Chemistry","Easy"],
+["Cell එකේ genetic material ප්‍රධාන වශයෙන් තිබෙන්නේ?",["Nucleus","Ribosome","Cell wall","Vacuole"],0,"Biology","Easy"],
+["5² − 3² = ?",["16","22","25","34"],0,"Mathematics","Easy"],
+["Velocity SI unit එක?",["m","m/s","N","J"],1,"Physics","Easy"],
+["pH 7 solution එක?",["Acidic","Neutral","Basic","Metal"],1,"Chemistry","Easy"],
+["Mitosis වල daughter cells?",["1","2","3","4"],1,"Biology","Easy"],
+["x² − 9 = 0 නම් x?",["3","−3","±3","9"],2,"Mathematics","Medium"],
+["Ohm's law?",["V = IR","F = ma","P = VI²","Q = mc"],0,"Physics","Medium"],
+["NaCl හි Na?",["Nitrogen","Sodium","Neon","Nickel"],1,"Chemistry","Medium"],
+["Photosynthesis pigment?",["Haemoglobin","Chlorophyll","Insulin","Keratin"],1,"Biology","Medium"],
+["∫2x dx = ?",["x² + C","2x² + C","x + C","x³ + C"],0,"Mathematics","Medium"],
+["Kinetic Energy?",["mv","½mv²","mgh","Fd"],1,"Physics","Medium"],
+["Oxidation සාමාන්‍යයෙන්?",["Electron gain","Electron loss","Proton gain","Neutron loss"],1,"Chemistry","Medium"],
+["DNA bases?",["A,T,G,C","A,U,G,C","Na,Cl,K,Ca","H,O,N,C"],0,"Biology","Medium"],
+["d/dx(x³) = ?",["x²","2x²","3x²","3x"],2,"Mathematics","Hard"],
+["Momentum formula?",["mv","ma","½mv²","mgh"],0,"Physics","Hard"],
+["Electrolysis සඳහා electrolyte?",["Ionic substance","Metal only","Gas only","Current only"],0,"Chemistry","Hard"]
+
 ];
-let qi=0,score=0,answered=false;
-function loadQuiz(){const q=qs[qi];document.getElementById("qNum").textContent=qi+1;document.getElementById("question").textContent=q[0];document.getElementById("quizFeedback").textContent="";answered=false;document.getElementById("options").innerHTML=q[1].map((o,i)=>`<button class="quiz-option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join("")}
-function answer(i){if(answered)return;answered=true;const q=qs[qi];document.getElementById("quizFeedback").textContent=i===q[2]?"✅ Correct! +10 XP":"❌ Try again. Correct answer: "+q[1][q[2]];if(i===q[2])score++}
-function nextQuestion(){qi=(qi+1)%qs.length;loadQuiz()}loadQuiz();
 
-function aiReply(t){
- t=t.toLowerCase();
- if(t.includes("trigon")||t.includes("sin")||t.includes("cos"))return "📐 Trigonometry කියන්නේ angle සහ triangle අතර සම්බන්ධතා ගැන. මුලින් sin, cos, tan කියන ratios තුන මතක තියාගන්න. උදාහරණයකට right triangle එකක tan θ = opposite / adjacent. ඊළඟට identities සහ graphs වෙත යමු.";
- if(t.includes("newton")||t.includes("physics"))return "⚛️ Physics topic එකක් නම් මුලින් definition → formula → units → simple example → past-paper question කියන order එකෙන් study කරන්න. Newton 2nd law සඳහා F = ma කියන relation එක මතක තියාගන්න.";
- if(t.includes("chem")||t.includes("organic"))return "🧪 Chemistry revise කරනකොට reaction එකේ reactants, products, conditions සහ observations වෙන වෙනම note කරගන්න. ඊට පස්සේ MCQ 5–10ක් practice කරන්න.";
- if(t.includes("bio")||t.includes("cell"))return "🧬 Biology සඳහා diagram + keywords + short explanation ක්‍රමය හොඳයි. Cell topic එකේ nucleus, cytoplasm, cell membrane වගේ structures වල function එක එක් වාක්‍යයකින් මතක තියාගන්න.";
- if(t.includes("plan")||t.includes("study"))return "🎯 අදට mini plan එකක්: 25 min Maths revision → 5 min break → 20 min Physics MCQ → 5 min break → 25 min Chemistry/Biology. අවසානයේ වැරදුණු ප්‍රශ්න 3ක් review කරන්න.";
- return "😊 හොඳ ප්‍රශ්නයක්! මට Maths, Biology, Physics, Chemistry, study planning සහ revision ගැන අහන්න. Topic එකේ නමත් එක්ක ප්‍රශ්නය ලියන්න; මම සරලව explain කරන්නම්.";
+let qi=0;
+let answered=false;
+
+function loadQuestion(){
+
+ let q=questions[qi];
+
+ $("qNo").textContent=qi+1;
+ $("question").textContent=q[0];
+ $("qSubject").textContent=q[3];
+ $("qLevel").textContent=q[4];
+ $("feedback").textContent="";
+ answered=false;
+
+ $("options").innerHTML=q[1].map((x,i)=>
+ `<button class="option" onclick="answer(${i})">
+ ${String.fromCharCode(65+i)}. ${esc(x)}
+ </button>`
+ ).join("");
+
 }
-function askAI(){const input=document.getElementById("aiInput"),t=input.value.trim();if(!t)return;const box=document.getElementById("messages");box.innerHTML+=`<div class="msg user">${t.replace(/</g,"&lt;")}</div>`;input.value="";setTimeout(()=>{box.innerHTML+=`<div class="msg bot">${aiReply(t)}</div>`;box.scrollTop=box.scrollHeight},350)}
 
-let seconds=1500,interval=null;
-function renderTimer(){document.getElementById("timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0")}
-function startTimer(){if(interval)return;document.getElementById("timerStatus").textContent="🔥 Focus mode ON!";interval=setInterval(()=>{seconds--;renderTimer();if(seconds<=0){clearInterval(interval);interval=null;seconds=1500;alert("🎉 Focus session complete! Great work!");renderTimer()}},1000)}
-function pauseTimer(){clearInterval(interval);interval=null;document.getElementById("timerStatus").textContent="Paused ⏸️"}
-function resetTimer(){pauseTimer();seconds=1500;renderTimer();document.getElementById("timerStatus").textContent="Ready to focus 🚀"}
+function answer(i){
+
+ if(answered)return;
+
+ answered=true;
+
+ let done=Number(localStorage.getItem("quizDoneV5")||0)+1;
+ let correct=Number(localStorage.getItem("correctV5")||0);
+
+ let q=questions[qi];
+
+ if(i===q[2]){
+  correct++;
+  $("feedback").textContent="✅ Correct! +10 XP 🎉";
+ }else{
+  $("feedback").textContent="❌ Correct answer: "+q[1][q[2]];
+ }
+
+ localStorage.setItem("quizDoneV5",done);
+ localStorage.setItem("correctV5",correct);
+
+ updateStats();
+
+}
+
+function nextQuestion(){
+
+ qi++;
+
+ if(qi>=questions.length)qi=0;
+
+ loadQuestion();
+
+}
+
+loadQuestion();
+
+
+/* =========================
+   AI
+========================= */
+
+function suggest(x){
+ $("aiInput").value=x;
+ askAI();
+}
+
+function askAI(){
+
+ let input=$("aiInput").value.trim();
+
+ if(!input)return;
+
+ $("messages").innerHTML+=
+ `<div class="message me">${esc(input)}</div>`;
+
+ $("aiInput").value="";
+
+ setTimeout(()=>{
+
+  $("messages").innerHTML+=
+  `<div class="message bot">${aiAnswer(input)}</div>`;
+
+  $("messages").scrollTop=$("messages").scrollHeight;
+
+ },300);
+
+}
+
+function aiAnswer(text){
+
+ let t=text.toLowerCase();
+
+ if(t.includes("trigon")||t.includes("sin")||t.includes("cos"))
+ return `📐 <b>Trigonometry</b><br><br>
+sin θ = opposite / hypotenuse<br>
+cos θ = adjacent / hypotenuse<br>
+tan θ = opposite / adjacent<br><br>
+Example questions practice කරලා concepts strengthen කරගන්න.`;
+
+ if(t.includes("newton")||t.includes("physics"))
+ return `⚛️ <b>Newton's Second Law</b><br><br>
+<b>F = ma</b><br>
+F = Force<br>m = Mass<br>a = Acceleration`;
+
+ if(t.includes("cell")||t.includes("biology"))
+ return `🧬 <b>Cell Biology</b><br><br>
+Nucleus එකේ genetic material තියෙනවා.
+Cell membrane එක substances movement control කරනවා.`;
+
+ if(t.includes("chem")||t.includes("organic"))
+ return `🧪 Chemistry revise කරනකොට
+definition → equation → conditions → examples
+විදිහට short notes හදාගන්න.`;
+
+ if(t.includes("plan")||t.includes("study"))
+ return `🎯 <b>Simple Study Plan</b><br><br>
+25 min Maths<br>
+5 min break<br>
+20 min Physics MCQ<br>
+5 min break<br>
+25 min Chemistry/Biology<br>
+10 min mistakes review`;
+
+ return `😊 Topic එකක් කියන්න:
+📐 Trigonometry
+⚛️ Physics
+🧬 Biology
+🧪 Chemistry
+🎯 Study Plan`;
+
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+let seconds=1500;
+let timerID=null;
+
+function updateClock(){
+
+ let m=Math.floor(seconds/60);
+ let s=seconds%60;
+
+ $("clock").textContent=
+ String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+
+}
+
+function startTimer(){
+
+ if(timerID)return;
+
+ $("timerMsg").textContent="🔥 Focus Mode ON";
+
+ timerID=setInterval(()=>{
+
+  seconds--;
+  updateClock();
+
+  if(seconds<=0){
+
+   pauseTimer();
+
+   let mins=Number(localStorage.getItem("minutesV5")||0)+25;
+   localStorage.setItem("minutesV5",mins);
+
+   seconds=1500;
+   updateClock();
+
+   updateStats();
+
+   alert("🎉 Focus session complete!");
+
+  }
+
+ },1000);
+
+}
+
+function pauseTimer(){
+
+ clearInterval(timerID);
+ timerID=null;
+
+ $("timerMsg").textContent="⏸ Paused";
+
+}
+
+function resetTimer(){
+
+ pauseTimer();
+
+ seconds=1500;
+ updateClock();
+
+ $("timerMsg").textContent="Ready 🚀";
+
+}
+
+updateClock();
+
+
+/* =========================
+   NOTES
+========================= */
 
 function saveNote(){
- const t=document.getElementById("noteTitle").value.trim(),b=document.getElementById("noteBody").value.trim();if(!t&&!b)return;
- const notes=JSON.parse(localStorage.getItem("studyHubNotes")||"[]");notes.unshift({t,b,date:new Date().toLocaleDateString()});localStorage.setItem("studyHubNotes",JSON.stringify(notes));renderNotes();
- document.getElementById("noteTitle").value="";document.getElementById("noteBody").value="";
+
+ let title=$("noteTitle").value.trim();
+ let body=$("noteBody").value.trim();
+
+ if(!title&&!body){
+  alert("Note එකක් ලියන්න.");
+  return;
+ }
+
+ notes.unshift({
+  id:Date.now(),
+  title,
+  body,
+  date:new Date().toLocaleDateString()
+ });
+
+ localStorage.setItem("notesV5",JSON.stringify(notes));
+
+ $("noteTitle").value="";
+ $("noteBody").value="";
+
+ renderNotes();
+
 }
-function renderNotes(){const n=JSON.parse(localStorage.getItem("studyHubNotes")||"[]");document.getElementById("savedNotes").innerHTML=n.map(x=>`<div class="task"><span><b>${x.t||"Untitled"}</b><br><small style="color:var(--muted)">${x.b||""}</small></span><span class="badge">${x.date}</span></div>`).join("")||'<p style="color:var(--muted)">Saved notes මෙතැන පෙන්වයි.</p>'}
+
+function deleteNote(id){
+
+ notes=notes.filter(n=>n.id!==id);
+
+ localStorage.setItem("notesV5",JSON.stringify(notes));
+
+ renderNotes();
+
+}
+
+function renderNotes(){
+
+ if(!notes.length){
+
+  $("notesList").innerHTML=
+  `<p class="muted" style="text-align:center;padding:20px">
+  📝 Notes නැහැ.
+  </p>`;
+
+  return;
+
+ }
+
+ $("notesList").innerHTML=notes.map(n=>`
+
+ <div class="task">
+
+ <div>
+ <b>${esc(n.title)}</b>
+ <p class="muted">${esc(n.body)}</p>
+ <small class="muted">${esc(n.date)}</small>
+ </div>
+
+ <button class="danger" onclick="deleteNote(${n.id})">🗑️</button>
+
+ </div>
+
+ `).join("");
+
+}
+
 renderNotes();
+
+
+/* =========================
+   PLANNER
+========================= */
+
+function addTask(){
+
+ let text=prompt("අද කරන්න ඕන study task එක:");
+
+ if(!text)return;
+
+ tasks.push({
+  id:Date.now(),
+  text,
+  done:false
+ });
+
+ saveTasks();
+
+}
+
+function saveTasks(){
+
+ localStorage.setItem("tasksV5",JSON.stringify(tasks));
+
+ renderTasks();
+
+}
+
+function toggleTask(id){
+
+ let t=tasks.find(x=>x.id===id);
+
+ if(t)t.done=!t.done;
+
+ saveTasks();
+
+}
+
+function deleteTask(id){
+
+ tasks=tasks.filter(x=>x.id!==id);
+
+ saveTasks();
+
+}
+
+function renderTasks(){
+
+ if(!tasks.length){
+
+  $("tasks").innerHTML=
+  `<p class="muted">+ Add Task ඔබලා plan එකක් හදන්න.</p>`;
+
+  return;
+
+ }
+
+ $("tasks").innerHTML=tasks.map(t=>`
+
+ <div class="task">
+
+ <label>
+ <input type="checkbox"
+ ${t.done?"checked":""}
+ onchange="toggleTask(${t.id})">
+
+ ${esc(t.text)}
+ </label>
+
+ <button class="danger" onclick="deleteTask(${t.id})">✕</button>
+
+ </div>
+
+ `).join("");
+
+}
+
+renderTasks();
+
+
+/* =========================
+   FLASHCARDS
+========================= */
+
+const flashcards=[
+ ["What is F = ma?","Force = mass × acceleration."],
+ ["sin 90° = ?","1"],
+ ["pH 7 means?","Neutral"],
+ ["DNA bases?","A, T, G, C"],
+ ["Momentum formula?","p = mv"],
+ ["Kinetic energy?","½mv²"]
+];
+
+let fi=0;
+
+function nextFlash(){
+
+ fi++;
+
+ if(fi>=flashcards.length)fi=0;
+
+ $("flashQ").textContent=flashcards[fi][0];
+ $("flashA").textContent=flashcards[fi][1];
+ $("flashA").classList.add("hidden");
+
+}
+
+function showFlash(){
+ $("flashA").classList.toggle("hidden");
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+ let done=Number(localStorage.getItem("quizDoneV5")||0);
+ let correct=Number(localStorage.getItem("correctV5")||0);
+ let xp=correct*10;
+ let level=Math.floor(xp/100)+1;
+ let progress=Math.min(100,Math.round(done/20*100));
+ let minutes=Number(localStorage.getItem("minutesV5")||0);
+ let streak=localStorage.getItem("streakV5")||1;
+
+ $("quizDone").textContent=done;
+ $("correctCount").textContent=correct;
+ $("xp").textContent=xp;
+ $("level").textContent=level;
+ $("studyMinutes").textContent=minutes;
+ $("paperCount").textContent=papers.length;
+ $("streak").textContent=streak;
+
+ $("progressText").textContent=progress+"%";
+ $("progressBar").style.width=progress+"%";
+ $("goalPercent").textContent=progress+"%";
+
+ $("ach10").textContent=done>=10?"Unlocked":"Locked";
+ $("ach100").textContent=xp>=100?"Unlocked":"Locked";
+
+ updateProfile();
+
+}
+
+updateStats();
+
+
+/* =========================
+   SEARCH
+========================= */
+
+$("search").addEventListener("input",function(){
+
+ let value=this.value.toLowerCase().trim();
+
+ if(!value)return;
+
+ if(value.includes("paper")){
+  openPage("papers");
+ }
+
+ else if(value.includes("math")){
+  openPage("subjects");
+  topics("Mathematics");
+ }
+
+ else if(value.includes("bio")){
+  openPage("subjects");
+  topics("Biology");
+ }
+
+ else if(value.includes("physics")){
+  openPage("subjects");
+  topics("Physics");
+ }
+
+ else if(value.includes("chem")){
+  openPage("subjects");
+  topics("Chemistry");
+ }
+
+});
+
 </script>
+
 </body>
 </html>
