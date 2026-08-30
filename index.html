@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Hub 📚 | Smart Sinhala Study Space</title>
+<style>
+:root{
+  --bg:#f5f7fb; --card:#fff; --text:#182033; --muted:#697386;
+  --primary:#6c63ff; --secondary:#00b894; --border:#e6e9f0;
+  --shadow:0 12px 35px rgba(35,42,70,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Noto Sans Sinhala",sans-serif;background:var(--bg);color:var(--text);transition:.3s}
+body.dark{--bg:#0f1220;--card:#181c2d;--text:#f4f6ff;--muted:#a9b0c5;--border:#2b3147;--shadow:0 12px 35px rgba(0,0,0,.25)}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+.hidden{display:none!important}
+#loginPage{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(135deg,#6c63ff,#8e7dff 50%,#00b894)}
+.login-box{width:min(430px,100%);background:rgba(255,255,255,.97);padding:34px;border-radius:28px;box-shadow:0 25px 70px rgba(0,0,0,.2);animation:up .7s ease}
+.logo{font-size:30px;font-weight:900;margin-bottom:8px}.logo span{color:var(--primary)}
+.login-box p{color:#687085;margin-bottom:22px}
+.field{margin:13px 0}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}
+.field input,.search input,.note-input,.ai-input{width:100%;padding:13px 14px;border:1px solid #dfe3ed;border-radius:13px;outline:none}
+.primary{background:var(--primary);color:white;padding:13px 18px;border-radius:13px;font-weight:800}
+.primary:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.demo{text-align:center;font-size:12px;margin-top:14px;color:#7b8498}
+#app{display:flex;min-height:100vh}
+.sidebar{width:245px;background:var(--card);border-right:1px solid var(--border);padding:22px 15px;position:fixed;inset:0 auto 0 0;z-index:10}
+.brand{font-size:23px;font-weight:900;padding:8px 12px 22px}.brand span{color:var(--primary)}
+.nav button{width:100%;text-align:left;padding:12px 14px;background:none;color:var(--muted);border-radius:12px;margin:3px 0;font-weight:700}
+.nav button.active,.nav button:hover{background:rgba(108,99,255,.1);color:var(--primary)}
+.sidebar-bottom{position:absolute;bottom:18px;left:15px;right:15px}
+.main{margin-left:245px;width:calc(100% - 245px);padding:24px;max-width:1500px}
+.topbar{display:flex;gap:15px;align-items:center;justify-content:space-between;margin-bottom:25px}
+.search{flex:1;max-width:520px}.search input{background:var(--card);color:var(--text);border-color:var(--border)}
+.icon-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:12px}
+.page{display:none}.page.active{display:block;animation:fade .35s ease}
+.hero{background:linear-gradient(135deg,#6c63ff,#8a80ff);color:white;padding:28px;border-radius:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.12);right:-45px;top:-60px}
+.hero h1{font-size:30px;margin-bottom:7px}.hero p{opacity:.9}.hero .chips{margin-top:18px;display:flex;gap:8px;flex-wrap:wrap}.chip{background:rgba(255,255,255,.16);padding:8px 12px;border-radius:20px;font-size:13px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--border);border-radius:19px;padding:20px;box-shadow:var(--shadow)}
+.stat strong{display:block;font-size:28px}.stat small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.subject{position:relative;overflow:hidden}.subject h3{margin:10px 0 5px}.subject p{font-size:13px;color:var(--muted)}.subject .emoji{font-size:36px}.subject button{margin-top:15px;width:100%;padding:10px;border-radius:11px;background:rgba(108,99,255,.1);color:var(--primary);font-weight:800}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}.section-title h2{font-size:20px}
+.progress{height:9px;background:var(--border);border-radius:99px;overflow:hidden;margin:12px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:99px}
+.two{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}.task{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border)}.task:last-child{border:0}.badge{font-size:11px;padding:5px 8px;border-radius:9px;background:rgba(0,184,148,.12);color:var(--secondary);font-weight:800}
+.paper-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.paper h3{margin:7px 0}.paper p{color:var(--muted);font-size:13px}.paper .actions{display:flex;gap:7px;margin-top:13px}.outline{padding:9px 12px;border-radius:10px;background:var(--bg);color:var(--text);border:1px solid var(--border)}
+.ai{display:grid;grid-template-columns:1fr 330px;gap:18px}.chat{min-height:430px;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:5px}.msg{max-width:80%;padding:11px 13px;border-radius:15px;margin:9px 0;line-height:1.5}.bot{background:rgba(108,99,255,.1);margin-right:auto}.user{background:var(--primary);color:white;margin-left:auto}.ai-form{display:flex;gap:8px;margin-top:12px}.ai-form input{flex:1}.ai-side li{margin:12px 0;color:var(--muted);font-size:14px}
+.timer{text-align:center}.timer-display{font-size:72px;font-weight:900;letter-spacing:2px;margin:15px}.timer button{margin:4px}.note-input{min-height:170px;resize:vertical;background:var(--card);color:var(--text);border-color:var(--border)}
+.quiz-option{width:100%;text-align:left;padding:13px;margin:7px 0;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px}.quiz-option:hover{border-color:var(--primary)}
+.mobile-menu{display:none}
+@keyframes fade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:none}}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.paper-grid{grid-template-columns:repeat(2,1fr)}.ai,.two{grid-template-columns:1fr}}
+@media(max-width:700px){
+ .sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:none}.main{margin:0;width:100%;padding:15px}.mobile-menu{display:block}.topbar{gap:8px}.topbar .search{order:3;flex-basis:100%;max-width:none;display:none}.topbar.show-search{flex-wrap:wrap}.topbar.show-search .search{display:block}.grid,.paper-grid{grid-template-columns:1fr}.hero h1{font-size:24px}.stats{gap:9px}.card{padding:16px}
+}
+</style>
+</head>
+<body>
+
+<section id="loginPage">
+  <div class="login-box">
+    <div class="logo">📚 Study <span>Hub</span></div>
+    <p>ඔයාගේ Smart Sinhala Study Space එකට welcome!</p>
+    <div class="field"><label>නම</label><input id="name" placeholder="ඔයාගේ නම"></div>
+    <div class="field"><label>Password</label><input id="password" type="password" placeholder="Password එකක් දාන්න"></div>
+    <button class="primary" style="width:100%" onclick="login()">Login / Enter Study Hub 🚀</button>
+    <div class="demo">මෙය front-end demo login එකකි. Real website එකකට backend authentication එකක් සම්බන්ධ කළ යුතුය.</div>
+  </div>
+</section>
+
+<section id="app" class="hidden">
+<aside class="sidebar" id="sidebar">
+  <div class="brand">📚 Study <span>Hub</span></div>
+  <div class="nav">
+    <button class="active" data-page="dashboard">🏠 Dashboard</button>
+    <button data-page="subjects">📚 Subjects</button>
+    <button data-page="papers">📄 Past & School Papers</button>
+    <button data-page="quiz">🧠 Smart Quiz</button>
+    <button data-page="ai">🤖 Sinhala AI Tutor</button>
+    <button data-page="focus">⏱️ Focus Timer</button>
+    <button data-page="notes">📝 My Notes</button>
+  </div>
+  <div class="sidebar-bottom">
+    <button class="icon-btn" style="width:100%" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+    <button class="icon-btn" style="width:100%;margin-top:8px" onclick="logout()">↪ Logout</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar" id="topbar">
+    <button class="icon-btn mobile-menu" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+    <div class="search"><input id="globalSearch" placeholder="🔎 Search subjects, papers, notes..." oninput="globalSearch()"></div>
+    <button class="icon-btn" onclick="document.getElementById('topbar').classList.toggle('show-search')">🔎</button>
+    <button class="icon-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+
+  <section class="page active" id="dashboard">
+    <div class="hero">
+      <h1>ආයුබෝවන්, <span id="userName">Student</span>! 👋</h1>
+      <p>අදත් පොඩි step එකක් ගන්න. Consistency > perfection 💪</p>
+      <div class="chips"><span class="chip">🔥 7 Day Streak</span><span class="chip">🎯 Daily Goal 72%</span><span class="chip">⭐ 1,240 XP</span></div>
+    </div>
+    <div class="stats">
+      <div class="card stat"><strong>72%</strong><small>Weekly Progress</small><div class="progress"><i style="width:72%"></i></div></div>
+      <div class="card stat"><strong>18</strong><small>Lessons Completed</small></div>
+      <div class="card stat"><strong>7 🔥</strong><small>Study Streak</small></div>
+      <div class="card stat"><strong>84%</strong><small>Quiz Accuracy</small></div>
+    </div>
+    <div class="section-title"><h2>🚀 Subjects</h2><button class="outline" onclick="showPage('subjects')">View all</button></div>
+    <div class="grid">
+      <div class="card subject searchable"><div class="emoji">📐</div><h3>Mathematics</h3><p>Pure + Applied Maths</p><button onclick="openSubject('Mathematics')">Continue →</button></div>
+      <div class="card subject searchable"><div class="emoji">🧬</div><h3>Biology</h3><p>Lessons + MCQ + Papers</p><button onclick="openSubject('Biology')">Continue →</button></div>
+      <div class="card subject searchable"><div class="emoji">⚛️</div><h3>Physics</h3><p>Theory + Problems + Papers</p><button onclick="openSubject('Physics')">Continue →</button></div>
+      <div class="card subject searchable"><div class="emoji">🧪</div><h3>Chemistry</h3><p>Organic + Inorganic + MCQ</p><button onclick="openSubject('Chemistry')">Continue →</button></div>
+    </div>
+    <div class="section-title"><h2>📅 Today's Plan</h2></div>
+    <div class="two">
+      <div class="card">
+        <div class="task"><span>📐 Maths – Trigonometry revision</span><span class="badge">25 min</span></div>
+        <div class="task"><span>⚛️ Physics – MCQ practice</span><span class="badge">20 min</span></div>
+        <div class="task"><span>🧪 Chemistry – Quick review</span><span class="badge">20 min</span></div>
+      </div>
+      <div class="card"><h3>🏆 Level Progress</h3><p style="color:var(--muted);margin-top:8px">Level 8 → Level 9</p><div class="progress"><i style="width:68%"></i></div><small style="color:var(--muted)">680 / 1000 XP</small></div>
+    </div>
+  </section>
+
+  <section class="page" id="subjects">
+    <div class="section-title"><h2>📚 All Subjects</h2></div>
+    <div class="grid">
+      <div class="card subject searchable"><div class="emoji">📐</div><h3>Mathematics</h3><p>Pure, Applied, Formula Bank</p><button onclick="openSubject('Mathematics')">Open Subject</button></div>
+      <div class="card subject searchable"><div class="emoji">🧬</div><h3>Biology</h3><p>Units, diagrams, MCQ</p><button onclick="openSubject('Biology')">Open Subject</button></div>
+      <div class="card subject searchable"><div class="emoji">⚛️</div><h3>Physics</h3><p>Theory, equations, problems</p><button onclick="openSubject('Physics')">Open Subject</button></div>
+      <div class="card subject searchable"><div class="emoji">🧪</div><h3>Chemistry</h3><p>Organic, physical, inorganic</p><button onclick="openSubject('Chemistry')">Open Subject</button></div>
+    </div>
+    <div class="card" style="margin-top:18px"><h3 id="subjectTitle">📌 Select a subject</h3><p id="subjectText" style="color:var(--muted);margin-top:8px">Subject එකක් open කළාම topics, progress සහ quick actions මෙතැන පෙන්වයි.</p><div id="topicButtons" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:15px"></div></div>
+  </section>
+
+  <section class="page" id="papers">
+    <div class="section-title"><h2>📄 Past Papers & School Papers</h2><button class="primary" onclick="alert('Paper upload feature එකට backend/storage එකක් connect කරන්න.')">+ Add Paper</button></div>
+    <div class="paper-grid">
+      <div class="card paper searchable"><span class="badge">Mathematics</span><h3>2025 A/L Mathematics</h3><p>Past Paper • Sinhala/English</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
+      <div class="card paper searchable"><span class="badge">Physics</span><h3>2024 Physics Paper</h3><p>Past Paper • MCQ + Structured</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
+      <div class="card paper searchable"><span class="badge">Chemistry</span><h3>School Term Paper</h3><p>School Paper • Practice</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
+      <div class="card paper searchable"><span class="badge">Biology</span><h3>Biology Revision Paper</h3><p>MCQ • Structured • Essay</p><div class="actions"><button class="outline" onclick="paperInfo()">👁 Preview</button><button class="primary" onclick="paperInfo()">📥 Open</button></div></div>
+      <div class="card paper searchable"><span class="badge">All</span><h3>Weekly Mixed Paper</h3><p>Timed challenge</p><div class="actions"><button class="primary" onclick="showPage('quiz')">Start →</button></div></div>
+      <div class="card paper searchable"><span class="badge">School</span><h3>School Paper Library</h3><p>Upload your own PDFs</p><div class="actions"><button class="outline" onclick="alert('ඔයාගේ backend එකට file upload/storage එක add කළ හැක.')">+ Upload</button></div></div>
+    </div>
+  </section>
+
+  <section class="page" id="quiz">
+    <div class="section-title"><h2>🧠 Smart Quiz</h2><span class="badge">XP +10</span></div>
+    <div class="card">
+      <p style="color:var(--muted)">Question <span id="qNum">1</span> / 5</p><h2 id="question" style="margin:14px 0">ශ්‍රේණිගත කිරීමේදී 2 + 3 × 4 = ?</h2>
+      <div id="options"></div><p id="quizFeedback" style="margin-top:12px;font-weight:800"></p>
+      <button class="primary" style="margin-top:10px" onclick="nextQuestion()">Next Question →</button>
+    </div>
+  </section>
+
+  <section class="page" id="ai">
+    <div class="section-title"><h2>🤖 Sinhala AI Tutor</h2></div>
+    <div class="ai">
+      <div class="card chat"><div class="messages" id="messages"><div class="msg bot">👋 ආයුබෝවන්! මම Study Hub AI Tutor. Maths, Physics, Chemistry, Biology පාඩම් explain කරන්න මගෙන් අහන්න.</div></div><div class="ai-form"><input id="aiInput" placeholder="උදා: Trigonometry සරලව explain කරන්න..." onkeydown="if(event.key==='Enter')askAI()"><button class="primary" onclick="askAI()">Send</button></div></div>
+      <div class="card ai-side"><h3>💡 Try asking</h3><ul><li>📐 “Trigonometry basics කියලා දෙන්න.”</li><li>⚛️ “Newton's laws සරලව explain කරන්න.”</li><li>🧪 “Organic chemistry revise කරමු.”</li><li>🧬 “Cell එකේ කොටස් explain කරන්න.”</li><li>📝 “මට study plan එකක් හදන්න.”</li></ul></div>
+    </div>
+  </section>
+
+  <section class="page" id="focus">
+    <div class="section-title"><h2>⏱️ Focus Timer</h2></div>
+    <div class="card timer"><p style="color:var(--muted)">Pomodoro Focus Session</p><div class="timer-display" id="timer">25:00</div><button class="primary" onclick="startTimer()">▶ Start</button><button class="outline" onclick="pauseTimer()">⏸ Pause</button><button class="outline" onclick="resetTimer()">↻ Reset</button><p id="timerStatus" style="margin-top:14px;color:var(--muted)">Ready to focus 🚀</p></div>
+  </section>
+
+  <section class="page" id="notes">
+    <div class="section-title"><h2>📝 My Notes</h2><button class="primary" onclick="saveNote()">💾 Save Note</button></div>
+    <div class="card"><input id="noteTitle" class="note-input" style="min-height:0;height:48px" placeholder="Note title..."><textarea id="noteBody" class="note-input" style="margin-top:12px" placeholder="මෙතැන ඔයාගේ notes ලියන්න..."></textarea><div id="savedNotes" style="margin-top:15px"></div></div>
+  </section>
+</main>
+</section>
+
+<script>
+let user=localStorage.getItem("studyHubUser")||"";
+function login(){
+  const n=document.getElementById("name").value.trim();
+  if(!n){alert("නම දාන්න 😊");return}
+  user=n;localStorage.setItem("studyHubUser",user);enterApp();
+}
+function enterApp(){document.getElementById("loginPage").classList.add("hidden");document.getElementById("app").classList.remove("hidden");document.getElementById("userName").textContent=user}
+function logout(){localStorage.removeItem("studyHubUser");location.reload()}
+if(user) enterApp();
+
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+function showPage(id){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+ document.getElementById("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"});
+}
+function toggleTheme(){document.body.classList.toggle("dark");localStorage.setItem("studyHubDark",document.body.classList.contains("dark"))}
+if(localStorage.getItem("studyHubDark")==="true")document.body.classList.add("dark");
+
+function openSubject(s){
+ showPage("subjects");document.getElementById("subjectTitle").textContent="📚 "+s;
+ const topics={Mathematics:["Algebra","Trigonometry","Calculus","Vectors"],Biology:["Cell","Genetics","Human Biology","Ecology"],Physics:["Mechanics","Waves","Electricity","Modern Physics"],Chemistry:["Organic","Inorganic","Physical","Electrochemistry"]};
+ document.getElementById("subjectText").textContent=s+" සඳහා lessons, MCQ, papers සහ revision tools මෙතැනින් access කරන්න.";
+ document.getElementById("topicButtons").innerHTML=topics[s].map(x=>`<button class="outline" onclick="alert('${x} lesson section එක ඉදිරියේදී add කළ හැක.')">${x}</button>`).join("");
+}
+function paperInfo(){alert("Demo paper card එකක්. Real PDFs add කරන්න papers/ folder එකට files දාලා link එක වෙනස් කරන්න.")}
+function globalSearch(){
+ const q=document.getElementById("globalSearch").value.toLowerCase();
+ document.querySelectorAll(".searchable").forEach(x=>x.style.display=(!q||x.innerText.toLowerCase().includes(q))?"":"none");
+}
+
+const qs=[
+ ["ශ්‍රේණිගත කිරීමේදී 2 + 3 × 4 = ?",["14","20","24","9"],0],
+ ["sin 90° = ?",["0","1","-1","0.5"],1],
+ ["Newtonගේ දෙවන නියමය කුමක්ද?",["F=ma","E=mc²","V=IR","P=VI"],0],
+ ["H₂O යනු?",["Oxygen","Hydrogen","Water","Carbon dioxide"],2],
+ ["Cell එකේ genetic material ප්‍රධාන වශයෙන් තිබෙන්නේ?",["Nucleus","Ribosome","Cell wall","Vacuole"],0]
+];
+let qi=0,score=0,answered=false;
+function loadQuiz(){const q=qs[qi];document.getElementById("qNum").textContent=qi+1;document.getElementById("question").textContent=q[0];document.getElementById("quizFeedback").textContent="";answered=false;document.getElementById("options").innerHTML=q[1].map((o,i)=>`<button class="quiz-option" onclick="answer(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join("")}
+function answer(i){if(answered)return;answered=true;const q=qs[qi];document.getElementById("quizFeedback").textContent=i===q[2]?"✅ Correct! +10 XP":"❌ Try again. Correct answer: "+q[1][q[2]];if(i===q[2])score++}
+function nextQuestion(){qi=(qi+1)%qs.length;loadQuiz()}loadQuiz();
+
+function aiReply(t){
+ t=t.toLowerCase();
+ if(t.includes("trigon")||t.includes("sin")||t.includes("cos"))return "📐 Trigonometry කියන්නේ angle සහ triangle අතර සම්බන්ධතා ගැන. මුලින් sin, cos, tan කියන ratios තුන මතක තියාගන්න. උදාහරණයකට right triangle එකක tan θ = opposite / adjacent. ඊළඟට identities සහ graphs වෙත යමු.";
+ if(t.includes("newton")||t.includes("physics"))return "⚛️ Physics topic එකක් නම් මුලින් definition → formula → units → simple example → past-paper question කියන order එකෙන් study කරන්න. Newton 2nd law සඳහා F = ma කියන relation එක මතක තියාගන්න.";
+ if(t.includes("chem")||t.includes("organic"))return "🧪 Chemistry revise කරනකොට reaction එකේ reactants, products, conditions සහ observations වෙන වෙනම note කරගන්න. ඊට පස්සේ MCQ 5–10ක් practice කරන්න.";
+ if(t.includes("bio")||t.includes("cell"))return "🧬 Biology සඳහා diagram + keywords + short explanation ක්‍රමය හොඳයි. Cell topic එකේ nucleus, cytoplasm, cell membrane වගේ structures වල function එක එක් වාක්‍යයකින් මතක තියාගන්න.";
+ if(t.includes("plan")||t.includes("study"))return "🎯 අදට mini plan එකක්: 25 min Maths revision → 5 min break → 20 min Physics MCQ → 5 min break → 25 min Chemistry/Biology. අවසානයේ වැරදුණු ප්‍රශ්න 3ක් review කරන්න.";
+ return "😊 හොඳ ප්‍රශ්නයක්! මට Maths, Biology, Physics, Chemistry, study planning සහ revision ගැන අහන්න. Topic එකේ නමත් එක්ක ප්‍රශ්නය ලියන්න; මම සරලව explain කරන්නම්.";
+}
+function askAI(){const input=document.getElementById("aiInput"),t=input.value.trim();if(!t)return;const box=document.getElementById("messages");box.innerHTML+=`<div class="msg user">${t.replace(/</g,"&lt;")}</div>`;input.value="";setTimeout(()=>{box.innerHTML+=`<div class="msg bot">${aiReply(t)}</div>`;box.scrollTop=box.scrollHeight},350)}
+
+let seconds=1500,interval=null;
+function renderTimer(){document.getElementById("timer").textContent=String(Math.floor(seconds/60)).padStart(2,"0")+":"+String(seconds%60).padStart(2,"0")}
+function startTimer(){if(interval)return;document.getElementById("timerStatus").textContent="🔥 Focus mode ON!";interval=setInterval(()=>{seconds--;renderTimer();if(seconds<=0){clearInterval(interval);interval=null;seconds=1500;alert("🎉 Focus session complete! Great work!");renderTimer()}},1000)}
+function pauseTimer(){clearInterval(interval);interval=null;document.getElementById("timerStatus").textContent="Paused ⏸️"}
+function resetTimer(){pauseTimer();seconds=1500;renderTimer();document.getElementById("timerStatus").textContent="Ready to focus 🚀"}
+
+function saveNote(){
+ const t=document.getElementById("noteTitle").value.trim(),b=document.getElementById("noteBody").value.trim();if(!t&&!b)return;
+ const notes=JSON.parse(localStorage.getItem("studyHubNotes")||"[]");notes.unshift({t,b,date:new Date().toLocaleDateString()});localStorage.setItem("studyHubNotes",JSON.stringify(notes));renderNotes();
+ document.getElementById("noteTitle").value="";document.getElementById("noteBody").value="";
+}
+function renderNotes(){const n=JSON.parse(localStorage.getItem("studyHubNotes")||"[]");document.getElementById("savedNotes").innerHTML=n.map(x=>`<div class="task"><span><b>${x.t||"Untitled"}</b><br><small style="color:var(--muted)">${x.b||""}</small></span><span class="badge">${x.date}</span></div>`).join("")||'<p style="color:var(--muted)">Saved notes මෙතැන පෙන්වයි.</p>'}
+renderNotes();
+</script>
+</body>
+</html>
