@@ -1,0 +1,3178 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Study Hub 📚</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --text:#182033;
+  --muted:#70798c;
+  --primary:#635bff;
+  --secondary:#00a884;
+  --danger:#ef4444;
+  --border:#e3e7ef;
+  --shadow:0 10px 30px rgba(30,40,70,.08);
+}
+
+body.dark{
+  --bg:#0d1220;
+  --card:#171d2c;
+  --text:#f4f6ff;
+  --muted:#aab3c5;
+  --border:#293247;
+  --shadow:0 10px 30px rgba(0,0,0,.25);
+}
+
+body{
+  font-family:Arial,"Noto Sans Sinhala",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition:.25s;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+  background:linear-gradient(135deg,#635bff,#00a884);
+}
+
+.login-box{
+  width:100%;
+  max-width:430px;
+  background:white;
+  padding:32px;
+  border-radius:25px;
+  box-shadow:0 20px 60px #0003;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.logo span{
+  color:var(--primary);
+}
+
+.login-box p{
+  color:#737b8d;
+  margin-bottom:22px;
+}
+
+.form-group{
+  margin-bottom:14px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:11px;
+  outline:none;
+}
+
+.primary{
+  border:none;
+  background:var(--primary);
+  color:white;
+  padding:11px 17px;
+  border-radius:11px;
+  font-weight:bold;
+}
+
+.secondary{
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.danger{
+  background:var(--danger);
+  color:white;
+  border:0;
+  padding:8px 11px;
+  border-radius:9px;
+}
+
+/* APP */
+
+.app{
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  position:fixed;
+  width:245px;
+  left:0;
+  top:0;
+  bottom:0;
+  background:var(--card);
+  border-right:1px solid var(--border);
+  padding:18px;
+  z-index:20;
+}
+
+.sidebar-logo{
+  font-size:24px;
+  font-weight:900;
+  margin-bottom:25px;
+}
+
+.sidebar-logo span{
+  color:var(--primary);
+}
+
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:12px;
+  margin:3px 0;
+  border-radius:11px;
+  text-align:left;
+  font-weight:bold;
+}
+
+.nav button:hover,
+.nav button.active{
+  background:#635bff15;
+  color:var(--primary);
+}
+
+.sidebar-bottom{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:18px;
+}
+
+.sidebar-bottom button{
+  width:100%;
+  margin-top:7px;
+}
+
+.main{
+  margin-left:245px;
+  width:calc(100% - 245px);
+  padding:18px;
+  max-width:1600px;
+}
+
+.topbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+}
+
+.topbar input{
+  flex:1;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--card);
+  color:var(--text);
+}
+
+.mobile-menu{
+  display:none;
+}
+
+/* PAGES */
+
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+/* HERO */
+
+.hero{
+  color:white;
+  padding:28px;
+  border-radius:25px;
+  background:linear-gradient(135deg,#635bff,#00a884);
+  box-shadow:var(--shadow);
+}
+
+.hero h1{
+  font-size:30px;
+  margin-bottom:7px;
+}
+
+.hero p{
+  opacity:.9;
+}
+
+.hero-chips{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:17px;
+}
+
+.chip{
+  padding:8px 12px;
+  border-radius:20px;
+  background:#ffffff22;
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+  margin:17px 0;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:17px;
+  box-shadow:var(--shadow);
+}
+
+.stat-number{
+  font-size:27px;
+  font-weight:900;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.progress{
+  height:8px;
+  background:var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+.progress-bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+/* QUICK */
+
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:20px 0 12px;
+}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+
+.quick{
+  cursor:pointer;
+  transition:.2s;
+}
+
+.quick:hover{
+  transform:translateY(-4px);
+}
+
+.icon{
+  font-size:30px;
+  margin-bottom:8px;
+}
+
+/* SUBJECT */
+
+.subject-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+}
+
+.subject-card{
+  transition:.2s;
+}
+
+.subject-card:hover{
+  transform:translateY(-3px);
+}
+
+.subject-icon{
+  font-size:42px;
+}
+
+/* TWO */
+
+.two-column{
+  display:grid;
+  grid-template-columns:1.3fr .7fr;
+  gap:14px;
+  margin-top:15px;
+}
+
+/* TASK */
+
+.task{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.badge{
+  display:inline-block;
+  background:#00a88418;
+  color:var(--secondary);
+  padding:5px 9px;
+  border-radius:8px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+/* PAPERS */
+
+.filters{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.filters input,
+.filters select{
+  padding:11px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--card);
+  color:var(--text);
+}
+
+.paper-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.paper-actions{
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+}
+
+/* QUIZ */
+
+.quiz-question{
+  font-size:22px;
+  margin:17px 0;
+}
+
+.option{
+  width:100%;
+  padding:13px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:var(--text);
+  border-radius:11px;
+  margin:6px 0;
+  text-align:left;
+}
+
+.option:hover{
+  border-color:var(--primary);
+}
+
+.feedback{
+  margin:13px 0;
+  font-weight:bold;
+}
+
+/* AI */
+
+.ai-grid{
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:14px;
+}
+
+.chat{
+  min-height:470px;
+  display:flex;
+  flex-direction:column;
+}
+
+.messages{
+  flex:1;
+  overflow:auto;
+  min-height:350px;
+}
+
+.message{
+  max-width:82%;
+  padding:11px 14px;
+  border-radius:15px;
+  margin:7px 0;
+  line-height:1.5;
+}
+
+.bot{
+  background:#635bff15;
+}
+
+.me{
+  margin-left:auto;
+  background:var(--primary);
+  color:white;
+}
+
+.ai-input{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.ai-input input{
+  flex:1;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--card);
+  color:var(--text);
+}
+
+/* TIMER */
+
+.timer{
+  text-align:center;
+}
+
+.clock{
+  font-size:75px;
+  font-weight:900;
+  margin:20px;
+}
+
+/* NOTES */
+
+.note-area{
+  min-height:230px;
+  resize:vertical;
+}
+
+/* FLASH */
+
+.flash{
+  min-height:300px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:100;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(560px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:var(--card);
+  color:var(--text);
+  border-radius:19px;
+  padding:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+
+  .stats{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .subject-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .paper-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:700px){
+
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+  }
+
+  .sidebar.open{
+    transform:translateX(0);
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:12px;
+  }
+
+  .mobile-menu{
+    display:block;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .quick-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .subject-grid,
+  .paper-grid{
+    grid-template-columns:1fr;
+  }
+
+  .two-column,
+  .ai-grid{
+    grid-template-columns:1fr;
+  }
+
+  .clock{
+    font-size:58px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div id="loginScreen" class="login-screen">
+
+  <div class="login-box">
+
+    <div class="logo">
+      📚 Study <span>Hub</span>
+    </div>
+
+    <p>
+      Smart • Simple • Free Study Platform
+    </p>
+
+    <div class="form-group">
+      <label>ඔයාගේ නම</label>
+      <input id="loginName" placeholder="ඔයාගේ නම">
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="Password">
+    </div>
+
+    <button class="primary" style="width:100%" onclick="login()">
+      🚀 Study Hub වෙත යන්න
+    </button>
+
+    <p style="font-size:12px;margin-top:13px;text-align:center">
+      Free demo login — data browser එකේ save වේ.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- APP -->
+
+<div id="app" class="app hidden">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar" id="sidebar">
+
+  <div class="sidebar-logo">
+    📚 Study <span>Hub</span>
+  </div>
+
+  <div class="nav">
+
+    <button class="active" onclick="openPage('dashboard',this)">
+      🏠 Dashboard
+    </button>
+
+    <button onclick="openPage('subjects',this)">
+      📚 Subjects
+    </button>
+
+    <button onclick="openPage('papers',this)">
+      📄 Past Papers
+    </button>
+
+    <button onclick="openPage('quiz',this)">
+      🧠 Smart MCQ
+    </button>
+
+    <button onclick="openPage('ai',this)">
+      🤖 Sinhala AI
+    </button>
+
+    <button onclick="openPage('timer',this)">
+      ⏱️ Focus Timer
+    </button>
+
+    <button onclick="openPage('notes',this)">
+      📝 My Notes
+    </button>
+
+    <button onclick="openPage('planner',this)">
+      📅 Study Planner
+    </button>
+
+    <button onclick="openPage('flashcards',this)">
+      🃏 Flashcards
+    </button>
+
+    <button onclick="openPage('manager',this)">
+      🛠️ Paper Manager
+    </button>
+
+  </div>
+
+  <div class="sidebar-bottom">
+
+    <button class="secondary" onclick="toggleDark()">
+      🌙 / ☀️ Theme
+    </button>
+
+    <button class="secondary" onclick="logout()">
+      ↪ Logout
+    </button>
+
+  </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+  <div class="topbar">
+
+    <button class="secondary mobile-menu"
+            onclick="toggleSidebar()">
+      ☰
+    </button>
+
+    <input
+      id="search"
+      placeholder="🔎 Study Hub search..."
+      oninput="globalSearch()">
+
+    <button class="secondary"
+            onclick="toggleDark()">
+      🌙
+    </button>
+
+  </div>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+  <div class="hero">
+
+    <h1>
+      ආයුබෝවන් <span id="studentName">Student</span>! 👋
+    </h1>
+
+    <p>
+      අදත් පොඩි step එකක් ගන්න.
+      Consistency > Perfection 💪
+    </p>
+
+    <div class="hero-chips">
+
+      <span class="chip">
+        🔥 <span id="streak">1</span> Day Streak
+      </span>
+
+      <span class="chip">
+        ⭐ <span id="xp">0</span> XP
+      </span>
+
+      <span class="chip">
+        🏆 Level <span id="level">1</span>
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="card">
+      <div class="stat-number" id="progressText">
+        0%
+      </div>
+      <span class="muted">Study Progress</span>
+
+      <div class="progress">
+        <div id="progressBar"
+             class="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="stat-number" id="quizDone">
+        0
+      </div>
+      <span class="muted">MCQs Done</span>
+    </div>
+
+    <div class="card">
+      <div class="stat-number" id="correctCount">
+        0
+      </div>
+      <span class="muted">Correct Answers</span>
+    </div>
+
+    <div class="card">
+      <div class="stat-number" id="paperCount">
+        0
+      </div>
+      <span class="muted">My Papers</span>
+    </div>
+
+    <div class="card">
+      <div class="stat-number">
+        🔥
+      </div>
+      <span class="muted">Keep Going!</span>
+    </div>
+
+  </div>
+
+
+  <div class="section-title">
+    <h2>⚡ Smart Actions</h2>
+  </div>
+
+  <div class="quick-grid">
+
+    <div class="card quick"
+         onclick="openPage('quiz')">
+      <div class="icon">🧠</div>
+      <b>Quick MCQ</b>
+      <p class="muted">Practice now</p>
+    </div>
+
+    <div class="card quick"
+         onclick="openPage('ai')">
+      <div class="icon">🤖</div>
+      <b>AI Tutor</b>
+      <p class="muted">Sinhala help</p>
+    </div>
+
+    <div class="card quick"
+         onclick="openPage('timer')">
+      <div class="icon">⏱️</div>
+      <b>Focus</b>
+      <p class="muted">25 minutes</p>
+    </div>
+
+    <div class="card quick"
+         onclick="openPage('papers')">
+      <div class="icon">📄</div>
+      <b>Papers</b>
+      <p class="muted">Past papers</p>
+    </div>
+
+    <div class="card quick"
+         onclick="openPage('flashcards')">
+      <div class="icon">🃏</div>
+      <b>Flashcards</b>
+      <p class="muted">Recall</p>
+    </div>
+
+  </div>
+
+
+  <div class="two-column">
+
+    <div class="card">
+
+      <h3>📅 Today's Mini Plan</h3>
+
+      <div class="task">
+        📐 Mathematics — 25 min
+        <span class="badge">Study</span>
+      </div>
+
+      <div class="task">
+        ⚛️ Physics — 20 min
+        <span class="badge">MCQ</span>
+      </div>
+
+      <div class="task">
+        🧪 Chemistry — 20 min
+        <span class="badge">Review</span>
+      </div>
+
+      <div class="task">
+        🧬 Biology — 15 min
+        <span class="badge">Recall</span>
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>🏆 Achievements</h3>
+
+      <div class="task">
+        🔥 First Study Day
+        <span class="badge">Unlocked</span>
+      </div>
+
+      <div class="task">
+        🧠 10 MCQs
+        <span class="badge">Locked</span>
+      </div>
+
+      <div class="task">
+        📚 10 Papers
+        <span class="badge">Locked</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SUBJECTS -->
+
+<section id="subjects" class="page">
+
+  <div class="section-title">
+    <h2>📚 Subjects</h2>
+  </div>
+
+  <div class="subject-grid">
+
+    <div class="card subject-card searchable">
+      <div class="subject-icon">📐</div>
+      <h2>Mathematics</h2>
+      <p class="muted">
+        Pure + Applied Mathematics
+      </p>
+      <button class="secondary"
+              onclick="showTopics('Mathematics')">
+        View Topics →
+      </button>
+    </div>
+
+    <div class="card subject-card searchable">
+      <div class="subject-icon">🧬</div>
+      <h2>Biology</h2>
+      <p class="muted">
+        Theory + Diagrams
+      </p>
+      <button class="secondary"
+              onclick="showTopics('Biology')">
+        View Topics →
+      </button>
+    </div>
+
+    <div class="card subject-card searchable">
+      <div class="subject-icon">⚛️</div>
+      <h2>Physics</h2>
+      <p class="muted">
+        Theory + Problems
+      </p>
+      <button class="secondary"
+              onclick="showTopics('Physics')">
+        View Topics →
+      </button>
+    </div>
+
+    <div class="card subject-card searchable">
+      <div class="subject-icon">🧪</div>
+      <h2>Chemistry</h2>
+      <p class="muted">
+        Organic + Physical + Inorganic
+      </p>
+      <button class="secondary"
+              onclick="showTopics('Chemistry')">
+        View Topics →
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="card" style="margin-top:15px">
+
+    <h3 id="topicTitle">
+      📌 Topics
+    </h3>
+
+    <div id="topicList"
+         class="muted"
+         style="margin-top:10px">
+      Subject එකක් select කරන්න.
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAPERS -->
+
+<section id="papers" class="page">
+
+  <div class="section-title">
+
+    <h2>📄 Past & School Papers</h2>
+
+    <button class="primary"
+            onclick="openPaperModal()">
+      ➕ Add Paper
+    </button>
+
+  </div>
+
+
+  <div class="filters">
+
+    <input
+      id="paperSearch"
+      placeholder="🔎 Search paper..."
+      oninput="renderPapers()">
+
+    <select id="paperSubject"
+            onchange="renderPapers()">
+
+      <option>All Subjects</option>
+      <option>Mathematics</option>
+      <option>Biology</option>
+      <option>Physics</option>
+      <option>Chemistry</option>
+
+    </select>
+
+
+    <select id="paperType"
+            onchange="renderPapers()">
+
+      <option>All Types</option>
+      <option>Past Paper</option>
+      <option>School Paper</option>
+      <option>Model Paper</option>
+
+    </select>
+
+  </div>
+
+
+  <div id="paperGrid"
+       class="paper-grid">
+  </div>
+
+
+  <div class="card"
+       style="margin-top:15px">
+
+    <b>💡 Free Paper System</b>
+
+    <p class="muted"
+       style="margin-top:7px">
+
+      PDF එක Google Drive එකට upload කරලා
+      share link එක Add Paper button එකෙන් add කරන්න.
+
+      මෙහෙම කළාම paid storage එකක් අවශ්‍ය නැහැ.
+
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- QUIZ -->
+
+<section id="quiz" class="page">
+
+  <div class="section-title">
+    <h2>🧠 Smart MCQ</h2>
+    <span class="badge">
+      +10 XP / Correct
+    </span>
+  </div>
+
+
+  <div class="card">
+
+    <span class="muted">
+      Question
+      <b id="questionNumber">1</b>
+      / 20
+    </span>
+
+    <div style="margin-top:10px">
+
+      <span id="questionSubject"
+            class="badge">
+        Mathematics
+      </span>
+
+      <span id="questionLevel"
+            class="badge">
+        Easy
+      </span>
+
+    </div>
+
+
+    <h2 id="question"
+        class="quiz-question">
+    </h2>
+
+
+    <div id="options"></div>
+
+
+    <div id="feedback"
+         class="feedback">
+    </div>
+
+
+    <button class="primary"
+            onclick="nextQuestion()">
+      Next →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- AI -->
+
+<section id="ai" class="page">
+
+  <div class="section-title">
+    <h2>🤖 Sinhala AI Tutor</h2>
+  </div>
+
+
+  <div class="ai-grid">
+
+    <div class="card chat">
+
+      <div id="messages"
+           class="messages">
+
+        <div class="message bot">
+
+          👋 ආයුබෝවන්!
+
+          Maths, Biology, Physics,
+          Chemistry හෝ study planning
+          ගැන මගෙන් අහන්න.
+
+        </div>
+
+      </div>
+
+
+      <div class="ai-input">
+
+        <input
+          id="aiInput"
+          placeholder="ප්‍රශ්නයක් අහන්න..."
+          onkeydown="if(event.key==='Enter')askAI()">
+
+        <button class="primary"
+                onclick="askAI()">
+          Send
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="card">
+
+      <h3>💡 Ask Me</h3>
+
+      <p class="muted"
+         style="margin-top:15px"
+         onclick="suggestAI('Trigonometry සරලව කියලා දෙන්න')">
+        📐 Trigonometry
+      </p>
+
+      <p class="muted"
+         style="margin-top:15px"
+         onclick="suggestAI('Newton laws explain කරන්න')">
+        ⚛️ Newton Laws
+      </p>
+
+      <p class="muted"
+         style="margin-top:15px"
+         onclick="suggestAI('Cell එක explain කරන්න')">
+        🧬 Cell
+      </p>
+
+      <p class="muted"
+         style="margin-top:15px"
+         onclick="suggestAI('Organic chemistry revise කරමු')">
+        🧪 Organic Chemistry
+      </p>
+
+      <p class="muted"
+         style="margin-top:15px"
+         onclick="suggestAI('මට study plan එකක් දෙන්න')">
+        🎯 Study Plan
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- TIMER -->
+
+<section id="timer" class="page">
+
+  <div class="section-title">
+    <h2>⏱️ Focus Timer</h2>
+  </div>
+
+
+  <div class="card timer">
+
+    <p class="muted">
+      Pomodoro Focus Session
+    </p>
+
+    <div id="clock"
+         class="clock">
+      25:00
+    </div>
+
+    <button class="primary"
+            onclick="startTimer()">
+      ▶ Start
+    </button>
+
+    <button class="secondary"
+            onclick="pauseTimer()">
+      ⏸ Pause
+    </button>
+
+    <button class="secondary"
+            onclick="resetTimer()">
+      ↻ Reset
+    </button>
+
+    <p id="timerMessage"
+       class="muted"
+       style="margin-top:15px">
+      Ready 🚀
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- NOTES -->
+
+<section id="notes" class="page">
+
+  <div class="section-title">
+
+    <h2>📝 My Notes</h2>
+
+    <button class="primary"
+            onclick="saveNote()">
+      💾 Save Note
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="form-group">
+
+      <label>Title</label>
+
+      <input id="noteTitle"
+             placeholder="Note title">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Note</label>
+
+      <textarea id="noteBody"
+                class="note-area"
+                placeholder="ඔයාගේ notes මෙතැන ලියන්න..."></textarea>
+
+    </div>
+
+
+    <div id="notesList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- PLANNER -->
+
+<section id="planner" class="page">
+
+  <div class="section-title">
+
+    <h2>📅 Study Planner</h2>
+
+    <button class="primary"
+            onclick="addTask()">
+      + Add Task
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <p class="muted">
+      අද කරන්න තියෙන වැඩ මෙතැන save කරගන්න.
+    </p>
+
+    <div id="tasks"
+         style="margin-top:10px">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FLASHCARDS -->
+
+<section id="flashcards" class="page">
+
+  <div class="section-title">
+
+    <h2>🃏 Flashcards</h2>
+
+    <button class="primary"
+            onclick="nextFlashcard()">
+      Next Card
+    </button>
+
+  </div>
+
+
+  <div class="card flash">
+
+    <div>
+
+      <div style="font-size:60px">
+        🃏
+      </div>
+
+      <h2 id="flashQuestion">
+        What is F = ma?
+      </h2>
+
+      <p id="flashAnswer"
+         class="muted hidden"
+         style="margin:15px">
+        Force = mass × acceleration.
+      </p>
+
+      <button class="secondary"
+              onclick="showFlashAnswer()">
+        👀 Show Answer
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- MANAGER -->
+
+<section id="manager" class="page">
+
+  <div class="section-title">
+
+    <h2>🛠️ Paper Manager</h2>
+
+    <button class="primary"
+            onclick="openPaperModal()">
+      ➕ Add Paper
+    </button>
+
+  </div>
+
+
+  <div class="card">
+
+    <h3>
+      📤 PDF එක Add කරන විදිහ
+    </h3>
+
+    <ol style="line-height:2;margin:15px 0 15px 20px">
+
+      <li>
+        Google Drive open කරන්න.
+      </li>
+
+      <li>
+        PDF paper එක upload කරන්න.
+      </li>
+
+      <li>
+        Share → General Access →
+        Anyone with the link → Viewer.
+      </li>
+
+      <li>
+        Copy link කරන්න.
+      </li>
+
+      <li>
+        Study Hub → Add Paper →
+        link එක paste කරන්න.
+      </li>
+
+    </ol>
+
+
+    <p class="muted">
+
+      Paper metadata + link browser එකේ
+      local storage එකේ save වේ.
+
+    </p>
+
+  </div>
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<!-- PAPER MODAL -->
+
+<div id="paperModal"
+     class="modal">
+
+  <div class="modal-box">
+
+    <div class="section-title">
+
+      <h2>➕ Add Paper</h2>
+
+      <button class="secondary"
+              onclick="closePaperModal()">
+        ✕
+      </button>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Paper Name</label>
+
+      <input id="paperName"
+             placeholder="2025 Physics Past Paper">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Subject</label>
+
+      <select id="paperSubjectAdd">
+
+        <option>Mathematics</option>
+        <option>Biology</option>
+        <option>Physics</option>
+        <option>Chemistry</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Year</label>
+
+      <input id="paperYear"
+             placeholder="2025">
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Paper Type</label>
+
+      <select id="paperTypeAdd">
+
+        <option>Past Paper</option>
+        <option>School Paper</option>
+        <option>Model Paper</option>
+
+      </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+      <label>Google Drive / PDF Link</label>
+
+      <input id="paperLink"
+             placeholder="https://drive.google.com/...">
+
+    </div>
+
+
+    <button class="primary"
+            style="width:100%"
+            onclick="savePaper()">
+
+      💾 Save Paper
+
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   BASIC
+================================ */
+
+const $ = id => document.getElementById(id);
+
+
+/* ================================
+   LOGIN
+================================ */
+
+let currentUser =
+  localStorage.getItem("studyHubUser") || "";
+
+function login(){
+
+  const name =
+    $("loginName").value.trim();
+
+  if(!name){
+
+    alert("ඔයාගේ නම දාන්න 😊");
+
+    return;
+  }
+
+  currentUser = name;
+
+  localStorage.setItem(
+    "studyHubUser",
+    name
+  );
+
+  enterApp();
+}
+
+
+function enterApp(){
+
+  $("loginScreen")
+    .classList.add("hidden");
+
+  $("app")
+    .classList.remove("hidden");
+
+  $("studentName")
+    .textContent = currentUser;
+
+  updateStats();
+
+}
+
+
+function logout(){
+
+  localStorage.removeItem(
+    "studyHubUser"
+  );
+
+  location.reload();
+
+}
+
+
+if(currentUser){
+
+  enterApp();
+
+}
+
+
+/* ================================
+   NAVIGATION
+================================ */
+
+function openPage(
+  page,
+  button = null
+){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(p =>
+      p.classList.remove("active")
+    );
+
+  $(page)
+    .classList.add("active");
+
+  document
+    .querySelectorAll(".nav button")
+    .forEach(b =>
+      b.classList.remove("active")
+    );
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+  $("sidebar")
+    .classList.remove("open");
+
+  window.scrollTo(0,0);
+
+}
+
+
+function toggleSidebar(){
+
+  $("sidebar")
+    .classList.toggle("open");
+
+}
+
+
+/* ================================
+   DARK MODE
+================================ */
+
+function toggleDark(){
+
+  document.body
+    .classList.toggle("dark");
+
+  localStorage.setItem(
+    "studyHubDark",
+    document.body.classList.contains("dark")
+  );
+
+}
+
+
+if(
+  localStorage.getItem("studyHubDark")
+  === "true"
+){
+
+  document.body.classList.add("dark");
+
+}
+
+
+/* ================================
+   SUBJECT TOPICS
+================================ */
+
+function showTopics(subject){
+
+  const topics = {
+
+    Mathematics:[
+      "Algebra",
+      "Trigonometry",
+      "Calculus",
+      "Vectors",
+      "Statistics",
+      "Complex Numbers"
+    ],
+
+    Biology:[
+      "Cell Biology",
+      "Genetics",
+      "Human Biology",
+      "Ecology",
+      "Evolution",
+      "Plant Biology"
+    ],
+
+    Physics:[
+      "Mechanics",
+      "Waves",
+      "Electricity",
+      "Thermal Physics",
+      "Modern Physics",
+      "Fields"
+    ],
+
+    Chemistry:[
+      "Atomic Structure",
+      "Chemical Bonding",
+      "Organic Chemistry",
+      "Inorganic Chemistry",
+      "Electrochemistry",
+      "Physical Chemistry"
+    ]
+
+  };
+
+  $("topicTitle")
+    .textContent =
+    "📌 " + subject + " Topics";
+
+  $("topicList")
+    .innerHTML =
+    topics[subject]
+      .map(topic =>
+        `<button class="secondary"
+          style="margin:4px"
+          onclick="alert('${topic} practice කරන්න MCQ + AI Tutor භාවිතා කරන්න 📚')">
+          ${topic}
+        </button>`
+      )
+      .join("");
+
+}
+
+
+/* ================================
+   PAPERS
+================================ */
+
+let papers =
+  JSON.parse(
+    localStorage.getItem("studyHubPapers")
+    || "[]"
+  );
+
+
+function openPaperModal(){
+
+  $("paperModal")
+    .classList.add("show");
+
+}
+
+
+function closePaperModal(){
+
+  $("paperModal")
+    .classList.remove("show");
+
+}
+
+
+function savePaper(){
+
+  const name =
+    $("paperName").value.trim();
+
+  const subject =
+    $("paperSubjectAdd").value;
+
+  const year =
+    $("paperYear").value.trim();
+
+  const type =
+    $("paperTypeAdd").value;
+
+  const link =
+    $("paperLink").value.trim();
+
+
+  if(!name || !link){
+
+    alert(
+      "Paper name සහ PDF link දෙකම දාන්න."
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !/^https?:\/\//i.test(link)
+  ){
+
+    alert(
+      "Valid URL එකක් දාන්න."
+    );
+
+    return;
+
+  }
+
+
+  papers.unshift({
+
+    id:Date.now(),
+
+    name,
+    subject,
+    year,
+    type,
+    link
+
+  });
+
+
+  localStorage.setItem(
+    "studyHubPapers",
+    JSON.stringify(papers)
+  );
+
+
+  $("paperName").value = "";
+  $("paperYear").value = "";
+  $("paperLink").value = "";
+
+
+  closePaperModal();
+
+  renderPapers();
+
+  updateStats();
+
+}
+
+
+function deletePaper(id){
+
+  if(
+    !confirm(
+      "මේ paper එක delete කරන්නද?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  papers =
+    papers.filter(
+      p => p.id !== id
+    );
+
+
+  localStorage.setItem(
+    "studyHubPapers",
+    JSON.stringify(papers)
+  );
+
+
+  renderPapers();
+
+  updateStats();
+
+}
+
+
+function renderPapers(){
+
+  const search =
+    (
+      $("paperSearch").value
+      || ""
+    ).toLowerCase();
+
+  const subject =
+    $("paperSubject").value;
+
+  const type =
+    $("paperType").value;
+
+
+  let filtered =
+    papers.filter(p => {
+
+      const matchesSearch =
+        (
+          p.name +
+          " " +
+          p.subject +
+          " " +
+          p.year
+        )
+        .toLowerCase()
+        .includes(search);
+
+      const matchesSubject =
+        subject === "All Subjects"
+        || p.subject === subject;
+
+      const matchesType =
+        type === "All Types"
+        || p.type === type;
+
+      return (
+        matchesSearch &&
+        matchesSubject &&
+        matchesType
+      );
+
+    });
+
+
+  if(!filtered.length){
+
+    $("paperGrid").innerHTML = `
+
+      <div class="card"
+           style="grid-column:1/-1;text-align:center">
+
+        <h3>📭 Papers නැහැ</h3>
+
+        <p class="muted">
+          Add Paper button එකෙන්
+          Google Drive PDF link එකක් add කරන්න.
+        </p>
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  $("paperGrid").innerHTML =
+    filtered.map(p => `
+
+      <div class="card searchable">
+
+        <span class="badge">
+          ${escapeHTML(p.subject)}
+        </span>
+
+        <span class="badge">
+          ${escapeHTML(p.type)}
+        </span>
+
+        <h3 style="margin-top:10px">
+          ${escapeHTML(p.name)}
+        </h3>
+
+        <p class="muted">
+          Year: ${escapeHTML(p.year)}
+        </p>
+
+        <div class="paper-actions">
+
+          <a
+            class="secondary"
+            href="${escapeAttribute(p.link)}"
+            target="_blank"
+            rel="noopener">
+
+            👀 Open PDF
+
+          </a>
+
+          <button
+            class="danger"
+            onclick="deletePaper(${p.id})">
+
+            🗑️
+
+          </button>
+
+        </div>
+
+      </div>
+
+    `)
+    .join("");
+
+}
+
+
+renderPapers();
+
+
+/* ================================
+   QUIZ
+================================ */
+
+const questions = [
+
+  {
+    q:"2 + 3 × 4 = ?",
+    options:["14","20","24","9"],
+    answer:0,
+    subject:"Mathematics",
+    level:"Easy"
+  },
+
+  {
+    q:"sin 90° = ?",
+    options:["0","1","-1","0.5"],
+    answer:1,
+    subject:"Mathematics",
+    level:"Easy"
+  },
+
+  {
+    q:"Newtonගේ දෙවන නියමය?",
+    options:["F = ma","E = mc²","V = IR","P = VI"],
+    answer:0,
+    subject:"Physics",
+    level:"Easy"
+  },
+
+  {
+    q:"H₂O යනු?",
+    options:[
+      "Oxygen",
+      "Hydrogen",
+      "Water",
+      "Carbon dioxide"
+    ],
+    answer:2,
+    subject:"Chemistry",
+    level:"Easy"
+  },
+
+  {
+    q:"Cell එකේ genetic material ප්‍රධාන වශයෙන් තිබෙන්නේ?",
+    options:[
+      "Nucleus",
+      "Ribosome",
+      "Cell wall",
+      "Vacuole"
+    ],
+    answer:0,
+    subject:"Biology",
+    level:"Easy"
+  },
+
+  {
+    q:"5² − 3² = ?",
+    options:["16","22","25","34"],
+    answer:0,
+    subject:"Mathematics",
+    level:"Easy"
+  },
+
+  {
+    q:"Velocity SI unit එක?",
+    options:["m","m/s","N","J"],
+    answer:1,
+    subject:"Physics",
+    level:"Easy"
+  },
+
+  {
+    q:"pH 7 solution එක?",
+    options:[
+      "Acidic",
+      "Neutral",
+      "Basic",
+      "Metal"
+    ],
+    answer:1,
+    subject:"Chemistry",
+    level:"Easy"
+  },
+
+  {
+    q:"Mitosis වලින් සාමාන්‍යයෙන් daughter cells කීයක් ලැබෙනවාද?",
+    options:["1","2","3","4"],
+    answer:1,
+    subject:"Biology",
+    level:"Easy"
+  },
+
+  {
+    q:"x² − 9 = 0 නම් x?",
+    options:["3","−3","±3","9"],
+    answer:2,
+    subject:"Mathematics",
+    level:"Medium"
+  },
+
+  {
+    q:"Ohm's law එක?",
+    options:[
+      "V = IR",
+      "F = ma",
+      "P = VI²",
+      "Q = mc"
+    ],
+    answer:0,
+    subject:"Physics",
+    level:"Medium"
+  },
+
+  {
+    q:"NaCl හි Na යනු?",
+    options:[
+      "Nitrogen",
+      "Sodium",
+      "Neon",
+      "Nickel"
+    ],
+    answer:1,
+    subject:"Chemistry",
+    level:"Medium"
+  },
+
+  {
+    q:"Photosynthesis වල ප්‍රධාන pigment එක?",
+    options:[
+      "Haemoglobin",
+      "Chlorophyll",
+      "Insulin",
+      "Keratin"
+    ],
+    answer:1,
+    subject:"Biology",
+    level:"Medium"
+  },
+
+  {
+    q:"∫2x dx = ?",
+    options:[
+      "x² + C",
+      "2x² + C",
+      "x + C",
+      "x³ + C"
+    ],
+    answer:0,
+    subject:"Mathematics",
+    level:"Medium"
+  },
+
+  {
+    q:"Kinetic Energy formula එක?",
+    options:[
+      "mv",
+      "½mv²",
+      "mgh",
+      "Fd"
+    ],
+    answer:1,
+    subject:"Physics",
+    level:"Medium"
+  },
+
+  {
+    q:"Oxidation සාමාන්‍යයෙන්?",
+    options:[
+      "Electron gain",
+      "Electron loss",
+      "Proton gain",
+      "Neutron loss"
+    ],
+    answer:1,
+    subject:"Chemistry",
+    level:"Medium"
+  },
+
+  {
+    q:"DNA bases?",
+    options:[
+      "A,T,G,C",
+      "A,U,G,C",
+      "Na,Cl,K,Ca",
+      "H,O,N,C"
+    ],
+    answer:0,
+    subject:"Biology",
+    level:"Medium"
+  },
+
+  {
+    q:"d/dx(x³) = ?",
+    options:[
+      "x²",
+      "2x²",
+      "3x²",
+      "3x"
+    ],
+    answer:2,
+    subject:"Mathematics",
+    level:"Hard"
+  },
+
+  {
+    q:"Momentum formula එක?",
+    options:[
+      "mv",
+      "ma",
+      "½mv²",
+      "mgh"
+    ],
+    answer:0,
+    subject:"Physics",
+    level:"Hard"
+  },
+
+  {
+    q:"Electrolysis සඳහා electrolyte එකක් සාමාන්‍යයෙන්?",
+    options:[
+      "Ionic substance",
+      "Metal only",
+      "Gas only",
+      "Current only"
+    ],
+    answer:0,
+    subject:"Chemistry",
+    level:"Hard"
+  }
+
+];
+
+
+let questionIndex = 0;
+let answered = false;
+
+
+function loadQuestion(){
+
+  const q =
+    questions[questionIndex];
+
+
+  $("questionNumber")
+    .textContent =
+    questionIndex + 1;
+
+
+  $("question")
+    .textContent = q.q;
+
+
+  $("questionSubject")
+    .textContent =
+    q.subject;
+
+
+  $("questionLevel")
+    .textContent =
+    q.level;
+
+
+  $("feedback")
+    .textContent = "";
+
+
+  answered = false;
+
+
+  $("options").innerHTML =
+    q.options.map(
+      (option,index) => `
+
+        <button
+          class="option"
+          onclick="answerQuestion(${index})">
+
+          ${String.fromCharCode(65+index)}.
+          ${escapeHTML(option)}
+
+        </button>
+
+      `
+    ).join("");
+
+}
+
+
+function answerQuestion(index){
+
+  if(answered)return;
+
+  answered = true;
+
+
+  let done =
+    Number(
+      localStorage.getItem(
+        "studyHubQuizDone"
+      ) || 0
+    );
+
+  let correct =
+    Number(
+      localStorage.getItem(
+        "studyHubCorrect"
+      ) || 0
+    );
+
+
+  done++;
+
+
+  const q =
+    questions[questionIndex];
+
+
+  if(index === q.answer){
+
+    correct++;
+
+    $("feedback")
+      .textContent =
+      "✅ Correct! +10 XP 🎉";
+
+  }else{
+
+    $("feedback")
+      .textContent =
+      "❌ Correct answer: "
+      + q.options[q.answer];
+
+  }
+
+
+  localStorage.setItem(
+    "studyHubQuizDone",
+    done
+  );
+
+  localStorage.setItem(
+    "studyHubCorrect",
+    correct
+  );
+
+
+  updateStats();
+
+}
+
+
+function nextQuestion(){
+
+  questionIndex++;
+
+  if(
+    questionIndex >=
+    questions.length
+  ){
+
+    questionIndex = 0;
+
+  }
+
+  loadQuestion();
+
+}
+
+
+loadQuestion();
+
+
+/* ================================
+   AI DEMO
+================================ */
+
+function escapeHTML(text){
+
+  return String(text)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttribute(text){
+
+  return String(text)
+    .replaceAll('"',"&quot;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+
+}
+
+
+function suggestAI(text){
+
+  $("aiInput")
+    .value = text;
+
+  askAI();
+
+}
+
+
+function askAI(){
+
+  const input =
+    $("aiInput").value.trim();
+
+  if(!input)return;
+
+
+  $("messages").innerHTML += `
+
+    <div class="message me">
+      ${escapeHTML(input)}
+    </div>
+
+  `;
+
+
+  $("aiInput").value = "";
+
+
+  setTimeout(() => {
+
+    $("messages").innerHTML += `
+
+      <div class="message bot">
+        ${aiAnswer(input)}
+      </div>
+
+    `;
+
+
+    $("messages").scrollTop =
+      $("messages").scrollHeight;
+
+  },300);
+
+}
+
+
+function aiAnswer(text){
+
+  const t =
+    text.toLowerCase();
+
+
+  if(
+    t.includes("trigon")
+    ||
+    t.includes("sin")
+    ||
+    t.includes("cos")
+  ){
+
+    return `
+      📐 <b>Trigonometry</b><br><br>
+
+      Right triangle එකක:<br>
+
+      sin θ = opposite / hypotenuse<br>
+      cos θ = adjacent / hypotenuse<br>
+      tan θ = opposite / adjacent<br><br>
+
+      Formula එක මතක තියාගන්න
+      example questions practice කරන්න.
+    `;
+
+  }
+
+
+  if(
+    t.includes("newton")
+    ||
+    t.includes("physics")
+  ){
+
+    return `
+      ⚛️ <b>Physics Tip</b><br><br>
+
+      Newton's Second Law:
+      <b>F = ma</b><br><br>
+
+      F = Force<br>
+      m = Mass<br>
+      a = Acceleration
+    `;
+
+  }
+
+
+  if(
+    t.includes("cell")
+    ||
+    t.includes("biology")
+  ){
+
+    return `
+      🧬 <b>Cell Biology</b><br><br>
+
+      Nucleus එකේ genetic material
+      තියෙනවා. Cell membrane එක
+      substances ඇතුළට හා පිටතට
+      ගමන් කිරීම පාලනය කරනවා.
+    `;
+
+  }
+
+
+  if(
+    t.includes("chem")
+    ||
+    t.includes("organic")
+  ){
+
+    return `
+      🧪 Chemistry revise කරනකොට
+      definition → equation →
+      conditions → examples ලෙස
+      short notes හදාගන්න.
+    `;
+
+  }
+
+
+  if(
+    t.includes("plan")
+    ||
+    t.includes("study")
+  ){
+
+    return `
+      🎯 <b>Simple Study Plan</b><br><br>
+
+      25 min Mathematics<br>
+      5 min break<br>
+      20 min Physics MCQ<br>
+      5 min break<br>
+      25 min Chemistry/Biology<br>
+      10 min mistakes review
+    `;
+
+  }
+
+
+  return `
+    😊 මේක Study Hub එකේ
+    built-in Sinhala study tutor demo එක.
+
+    <br><br>
+
+    Topic එකක් කියන්න:
+    <br>
+    📐 Trigonometry<br>
+    ⚛️ Physics<br>
+    🧬 Biology<br>
+    🧪 Chemistry<br>
+    🎯 Study Plan
+  `;
+
+}
+
+
+/* ================================
+   TIMER
+================================ */
+
+let seconds = 1500;
+let timerID = null;
+
+
+function updateClock(){
+
+  const minutes =
+    Math.floor(seconds/60);
+
+  const secs =
+    seconds % 60;
+
+
+  $("clock")
+    .textContent =
+    String(minutes).padStart(2,"0")
+    + ":"
+    + String(secs).padStart(2,"0");
+
+}
+
+
+function startTimer(){
+
+  if(timerID)return;
+
+
+  $("timerMessage")
+    .textContent =
+    "🔥 Focus Mode ON";
+
+
+  timerID =
+    setInterval(() => {
+
+      seconds--;
+
+      updateClock();
+
+
+      if(seconds <= 0){
+
+        pauseTimer();
+
+        seconds = 1500;
+
+        updateClock();
+
+        alert(
+          "🎉 Focus session complete!"
+        );
+
+      }
+
+    },1000);
+
+}
+
+
+function pauseTimer(){
+
+  clearInterval(timerID);
+
+  timerID = null;
+
+  $("timerMessage")
+    .textContent =
+    "⏸ Paused";
+
+}
+
+
+function resetTimer(){
+
+  pauseTimer();
+
+  seconds = 1500;
+
+  updateClock();
+
+  $("timerMessage")
+    .textContent =
+    "Ready 🚀";
+
+}
+
+
+updateClock();
+
+
+/* ================================
+   NOTES
+================================ */
+
+let notes =
+  JSON.parse(
+    localStorage.getItem(
+      "studyHubNotes"
+    ) || "[]"
+  );
+
+
+function saveNote(){
+
+  const title =
+    $("noteTitle")
+      .value.trim();
+
+  const body =
+    $("noteBody")
+      .value.trim();
+
+
+  if(!title && !body){
+
+    alert("Note එකක් ලියන්න.");
+
+    return;
+
+  }
+
+
+  notes.unshift({
+
+    id:Date.now(),
+
+    title,
+    body,
+
+    date:
+      new Date()
+        .toLocaleDateString()
+
+  });
+
+
+  localStorage.setItem(
+    "studyHubNotes",
+    JSON.stringify(notes)
+  );
+
+
+  $("noteTitle").value = "";
+
+  $("noteBody").value = "";
+
+
+  renderNotes();
+
+}
+
+
+function deleteNote(id){
+
+  notes =
+    notes.filter(
+      n => n.id !== id
+    );
+
+
+  localStorage.setItem(
+    "studyHubNotes",
+    JSON.stringify(notes)
+  );
+
+
+  renderNotes();
+
+}
+
+
+function renderNotes(){
+
+  if(!notes.length){
+
+    $("notesList").innerHTML = `
+
+      <div class="muted"
+           style="text-align:center;padding:20px">
+
+        📝 තාම notes නැහැ.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  $("notesList").innerHTML =
+    notes.map(n => `
+
+      <div class="task">
+
+        <div>
+
+          <b>
+            ${escapeHTML(n.title)}
+          </b>
+
+          <p class="muted">
+            ${escapeHTML(n.body)}
+          </p>
+
+          <small class="muted">
+            ${n.date}
+          </small>
+
+        </div>
+
+        <button
+          class="danger"
+          onclick="deleteNote(${n.id})">
+
+          🗑️
+
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+renderNotes();
+
+
+/* ================================
+   PLANNER
+================================ */
+
+let tasks =
+  JSON.parse(
+    localStorage.getItem(
+      "studyHubTasks"
+    ) || "[]"
+  );
+
+
+function addTask(){
+
+  const text =
+    prompt(
+      "අද කරන්න ඕන study task එක:"
+    );
+
+
+  if(!text)return;
+
+
+  tasks.push({
+
+    id:Date.now(),
+
+    text,
+
+    done:false
+
+  });
+
+
+  saveTasks();
+
+}
+
+
+function saveTasks(){
+
+  localStorage.setItem(
+    "studyHubTasks",
+    JSON.stringify(tasks)
+  );
+
+
+  renderTasks();
+
+}
+
+
+function toggleTask(id){
+
+  const task =
+    tasks.find(
+      t => t.id === id
+    );
+
+  if(task){
+
+    task.done =
+      !task.done;
+
+  }
+
+  saveTasks();
+
+}
+
+
+function deleteTask(id){
+
+  tasks =
+    tasks.filter(
+      t => t.id !== id
+    );
+
+  saveTasks();
+
+}
+
+
+function renderTasks(){
+
+  if(!tasks.length){
+
+    $("tasks").innerHTML = `
+
+      <div class="muted">
+        + Add Task ඔබලා
+        study plan එකක් හදන්න.
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  $("tasks").innerHTML =
+    tasks.map(t => `
+
+      <div class="task">
+
+        <label>
+
+          <input
+            type="checkbox"
+            ${t.done ? "checked" : ""}
+            onchange="toggleTask(${t.id})">
+
+          ${escapeHTML(t.text)}
+
+        </label>
+
+        <button
+          class="danger"
+          onclick="deleteTask(${t.id})">
+
+          ✕
+
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+renderTasks();
+
+
+/* ================================
+   FLASHCARDS
+================================ */
+
+const flashcards = [
+
+  [
+    "What is F = ma?",
+    "Force = mass × acceleration."
+  ],
+
+  [
+    "sin 90° = ?",
+    "1"
+  ],
+
+  [
+    "pH 7 means?",
+    "Neutral"
+  ],
+
+  [
+    "DNA bases?",
+    "A, T, G, C"
+  ],
+
+  [
+    "Momentum formula?",
+    "p = mv"
+  ],
+
+  [
+    "Kinetic energy?",
+    "½mv²"
+  ]
+
+];
+
+
+let flashIndex = 0;
+
+
+function nextFlashcard(){
+
+  flashIndex++;
+
+  if(
+    flashIndex >=
+    flashcards.length
+  ){
+
+    flashIndex = 0;
+
+  }
+
+
+  $("flashQuestion")
+    .textContent =
+    flashcards[flashIndex][0];
+
+
+  $("flashAnswer")
+    .textContent =
+    flashcards[flashIndex][1];
+
+
+  $("flashAnswer")
+    .classList.add("hidden");
+
+}
+
+
+function showFlashAnswer(){
+
+  $("flashAnswer")
+    .classList.toggle("hidden");
+
+}
+
+
+/* ================================
+   GLOBAL SEARCH
+================================ */
+
+function globalSearch(){
+
+  const value =
+    $("search").value
+      .trim()
+      .toLowerCase();
+
+
+  if(!value){
+
+    return;
+
+  }
+
+
+  const subjects =
+    [
+      "mathematics",
+      "biology",
+      "physics",
+      "chemistry"
+    ];
+
+
+  if(
+    subjects.includes(value)
+  ){
+
+    openPage("subjects");
+
+  }
+
+
+  if(
+    value.includes("paper")
+  ){
+
+    openPage("papers");
+
+  }
+
+
+}
+
+
+/* ================================
+   STATS
+================================ */
+
+function updateStats(){
+
+  const done =
+    Number(
+      localStorage.getItem(
+        "studyHubQuizDone"
+      ) || 0
+    );
+
+  const correct =
+    Number(
+      localStorage.getItem(
+        "studyHubCorrect"
+      ) || 0
+    );
+
+
+  const xp =
+    correct * 10;
+
+
+  const level =
+    Math.floor(xp / 100) + 1;
+
+
+  const progress =
+    Math.min(
+      100,
+      Math.round(
+        (done / 20) * 100
+      )
+    );
+
+
+  $("quizDone")
+    .textContent = done;
+
+
+  $("correctCount")
+    .textContent = correct;
+
+
+  $("xp")
+    .textContent = xp;
+
+
+  $("level")
+    .textContent = level;
+
+
+  $("progressText")
+    .textContent =
+    progress + "%";
+
+
+  $("progressBar")
+    .style.width =
+    progress + "%";
+
+
+  $("paperCount")
+    .textContent =
+    papers.length;
+
+}
+
+
+/* ================================
+   WELCOME STREAK
+================================ */
+
+$("streak")
+  .textContent =
+  localStorage.getItem(
+    "studyHubStreak"
+  ) || "1";
+
+
+</script>
+
+</body>
+</html>
